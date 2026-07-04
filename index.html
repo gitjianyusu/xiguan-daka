@@ -265,9 +265,9 @@
         <circle cx="34" cy="62" r="3.5" fill="#ffd6e8" opacity=".85"/>
         <circle cx="66" cy="62" r="3.5" fill="#ffd6e8" opacity=".85"/>
       </svg>
-      暑假打卡<span class="sparkles">✨</span>
-    </div>
-    <nav class="tabs">
+     梨子酱的快乐暑假打卡<span class="sparkles">✨</span>
+   </div>
+   <nav class="tabs">
       <button class="tab active" data-view="today">今日</button>
       <button class="tab" data-view="habits">习惯</button>
       <button class="tab" data-view="data">数据</button>
@@ -415,15 +415,15 @@ function load(){
   try{state.records=JSON.parse(localStorage.getItem(KR))||{};}catch(e){state.records={};}
   try{state.celebrated=JSON.parse(localStorage.getItem('habit_tracker_cel'))||{};}catch(e){state.celebrated={};}
   if(!state.habits.length){
-    state.habits=[
-      {id:uid(),name:'做家务',emoji:'🧹',createdAt:Date.now()},
-      {id:uid(),name:'整理物品',emoji:'🏠',createdAt:Date.now()},
-      {id:uid(),name:'阅读书籍',emoji:'📖',createdAt:Date.now()},
-      {id:uid(),name:'听英语',emoji:'🎧',createdAt:Date.now()},
-      {id:uid(),name:'做计算题',emoji:'🧮',createdAt:Date.now()},
-    ];
-    saveHabits();
-  }
+   state.habits=[
+     {id:uid(),name:'主动做家务',emoji:'🧹',createdAt:Date.now()},
+     {id:uid(),name:'主动收拾自己的物品',emoji:'🏠',createdAt:Date.now()},
+     {id:uid(),name:'阅读1小时',emoji:'📖',createdAt:Date.now()},
+     {id:uid(),name:'听英语半小时',emoji:'🎧',createdAt:Date.now()},
+     {id:uid(),name:'做40道计算题',emoji:'🧮',createdAt:Date.now()},
+   ];
+   saveHabits();
+ }
 }
 function saveHabits(){localStorage.setItem(KH,JSON.stringify(state.habits));}
 function saveRecords(){localStorage.setItem(KR,JSON.stringify(state.records));}
@@ -442,10 +442,16 @@ function setRating(hid,ds,n){
 function dayTotal(ds){let s=0;const r=state.records[ds];if(r)for(const k in r)s+=r[k];return s;}
 function allDone(ds){return state.habits.length>0 && state.habits.every(h=>rating(h.id,ds)>=1);}
 function streak(hid){
-  let s=0;let cur=new Date();
-  if(rating(hid,ymd(cur))<1)cur=addDays(cur,-1);
-  while(rating(hid,ymd(cur))>=1){s++;cur=addDays(cur,-1);}
-  return s;
+ let s=0;let cur=new Date();
+ if(rating(hid,ymd(cur))<1)cur=addDays(cur,-1);
+ while(rating(hid,ymd(cur))>=1){s++;cur=addDays(cur,-1);}
+ return s;
+}
+function streakAsOf(hid,ds){
+ let s=0;let cur=new Date(ds+'T00:00:00');
+ if(rating(hid,ymd(cur))<1)cur=addDays(cur,-1);
+ while(rating(hid,ymd(cur))>=1){s++;cur=addDays(cur,-1);}
+ return s;
 }
 function bestStreak(hid){
   let best=0,cur=0;const d=new Date();d.setHours(0,0,0,0);
@@ -499,9 +505,9 @@ function renderToday(){
   const list=document.getElementById('today-list');
   if(!total){list.innerHTML=`<div class="empty"><div class="big">📋</div>还没有习惯哦，先去<a onclick="go('habits')">添加几个</a>吧～</div>`;return;}
   list.innerHTML=state.habits.map(h=>{
-    const r=rating(h.id,ds);
-    const sk=streak(h.id);
-    return `<div class="habit-row ${r>=1?'done':''}">
+   const r=rating(h.id,ds);
+   const sk=streakAsOf(h.id,ds);
+   return `<div class="habit-row ${r>=1?'done':''}">
       <div class="h-emoji">${h.emoji}</div>
       <div class="h-meta">
         <div class="h-name">${esc(h.name)}</div>
