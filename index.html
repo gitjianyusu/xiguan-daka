@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>暑假习惯打卡 ✨</title>
+<style>
+  :root{
+    --pink:#ff8fab; --pink-light:#ffd6e8; --pink-soft:#fff0f6;
+    --purple:#b9a4f0; --purple-light:#e8dfff;
+    --mint:#7cd9c4; --mint-light:#d6f5ec;
+    --blue:#8ed1f0; --blue-light:#d9f0fb;
+    --yellow:#ffd66b; --yellow-light:#fff3d6;
+    --star:#ffc93c;
+    --ink:#5b4a5a; --ink-soft:#8a7a88; --muted:#b5a8b4;
+    --line:#f0e6f0; --line-soft:#f7f1f7;
+    --surface:#ffffff; --bg:#fff8fc;
+    --radius:20px; --radius-sm:14px;
+    --shadow:0 6px 20px rgba(255,143,171,.14);
+    --shadow-soft:0 3px 12px rgba(185,164,240,.10);
+    --maxw:920px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 12% 8%, var(--pink-light) 0%, transparent 26%),
+      radial-gradient(circle at 88% 14%, var(--purple-light) 0%, transparent 26%),
+      radial-gradient(circle at 80% 88%, var(--mint-light) 0%, transparent 28%),
+      radial-gradient(circle at 10% 80%, var(--blue-light) 0%, transparent 26%),
+      var(--bg);
+    background-attachment:fixed;
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+    padding-bottom:96px;min-height:100vh;
+  }
+  .num{font-variant-numeric:tabular-nums;}
+  button{font-family:inherit;}
+  .bg-deco{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+  .bg-deco span{position:absolute;font-size:22px;opacity:.28;animation:float 9s ease-in-out infinite;}
+  .bg-deco span:nth-child(1){left:6%;top:18%;animation-delay:0s;}
+  .bg-deco span:nth-child(2){left:90%;top:30%;font-size:18px;animation-delay:1.5s;}
+  .bg-deco span:nth-child(3){left:78%;top:72%;font-size:26px;animation-delay:3s;}
+ .bg-deco span:nth-child(4){left:16%;top:78%;font-size:20px;animation-delay:4.5s;}
+ @keyframes float{0%,100%{transform:translateY(0) rotate(-6deg);}50%{transform:translateY(-16px) rotate(6deg);}}
+  header.top{
+    position:sticky;top:0;z-index:40;
+    background:rgba(255,248,252,.82);
+    backdrop-filter:saturate(180%) blur(14px);
+    -webkit-backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .top-in{max-width:var(--maxw);margin:0 auto;padding:0 18px;height:62px;display:flex;align-items:center;gap:12px;position:relative;}
+  .brand{font-weight:800;font-size:19px;display:flex;align-items:center;gap:9px;letter-spacing:.3px;}
+  .brand .masc{width:34px;height:34px;flex:none;}
+  .brand .sparkles{font-size:16px;}
+  .tabs{display:flex;gap:4px;margin-left:auto;background:var(--pink-soft);padding:4px;border-radius:16px;}
+  .tab{
+    border:none;background:none;color:var(--ink-soft);
+    font-size:14px;font-weight:700;padding:8px 14px;border-radius:12px;cursor:pointer;
+    transition:all .18s;
+  }
+  .tab.active{color:#fff;background:linear-gradient(135deg,var(--pink),var(--purple));box-shadow:var(--shadow);}
+  main{max-width:var(--maxw);margin:0 auto;padding:24px 18px 0;position:relative;z-index:1;}
+  .datebar{display:flex;align-items:center;gap:10px;justify-content:space-between;margin-bottom:20px;}
+  .date-nav{display:flex;align-items:center;gap:6px;}
+  .iconbtn{
+    width:40px;height:40px;border-radius:14px;border:2px solid var(--line);background:var(--surface);
+    color:var(--ink-soft);font-size:18px;cursor:pointer;display:grid;place-items:center;
+    transition:all .15s;font-weight:700;
+  }
+  .iconbtn:hover{border-color:var(--pink);color:var(--pink);transform:translateY(-1px);}
+  .date-label{font-size:20px;font-weight:800;min-width:190px;text-align:center;line-height:1.2;}
+  .date-label small{display:block;font-weight:600;color:var(--ink-soft);font-size:12.5px;margin-top:2px;}
+  .pill-btn{
+    border:2px solid var(--pink-light);background:var(--pink-soft);color:var(--pink);
+    font-size:13.5px;font-weight:700;padding:9px 16px;border-radius:14px;cursor:pointer;
+    transition:all .15s;
+  }
+  .pill-btn:hover{background:var(--pink-light);}
+  .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px;}
+  .sum-card{
+    background:var(--surface);border:2px solid var(--line);border-radius:var(--radius);
+    padding:16px 14px;text-align:center;box-shadow:var(--shadow-soft);position:relative;overflow:hidden;
+  }
+  .sum-card.c1{border-color:var(--pink-light);} .sum-card.c1 .ico{background:var(--pink-soft);color:var(--pink);}
+  .sum-card.c2{border-color:var(--yellow-light);} .sum-card.c2 .ico{background:var(--yellow-light);color:#e6a700;}
+  .sum-card.c3{border-color:var(--purple-light);} .sum-card.c3 .ico{background:var(--purple-light);color:var(--purple);}
+  .sum-card.c4{border-color:var(--mint-light);} .sum-card.c4 .ico{background:var(--mint-light);color:#3aa68e;}
+  .sum-card .ico{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font-size:18px;margin:0 auto 8px;}
+  .sum-card .k{font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:3px;}
+  .sum-card .v{font-size:24px;font-weight:800;letter-spacing:-.5px;}
+  .sum-card .v small{font-size:13px;font-weight:700;color:var(--muted);margin-left:1px;}
+  .stitle{font-size:14px;font-weight:800;color:var(--ink-soft);margin:0 0 14px;display:flex;align-items:center;gap:10px;}
+  .stitle .line{flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--pink-light),transparent);}
+  .habits{display:flex;flex-direction:column;gap:12px;}
+  .habit-row{
+    display:flex;align-items:center;gap:14px;
+    background:var(--surface);border:2px solid var(--line);border-radius:var(--radius);
+    padding:15px 16px;box-shadow:var(--shadow-soft);
+    transition:all .18s;
+  }
+  .habit-row:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+  .habit-row.done{border-color:var(--mint);background:linear-gradient(0deg,var(--mint-light),var(--mint-light)) ,var(--surface);}
+  .h-emoji{font-size:34px;width:48px;height:48px;display:grid;place-items:center;flex:none;
+    background:var(--bg);border-radius:16px;line-height:1;}
+  .habit-row.done .h-emoji{background:var(--mint-light);}
+  .h-meta{flex:1;min-width:0;}
+  .h-name{font-size:16.5px;font-weight:700;}
+  .h-sub{font-size:12.5px;color:var(--muted);margin-top:2px;font-weight:600;}
+  .habit-row.done .h-sub{color:#3aa68e;}
+  .stars{display:flex;gap:2px;flex:none;}
+  .star{
+    width:44px;height:44px;border:none;background:none;cursor:pointer;
+    display:grid;place-items:center;font-size:30px;line-height:1;color:#e0d4df;
+    border-radius:12px;transition:transform .12s,color .15s,background .15s;padding:0;
+  }
+  .star:hover{background:var(--yellow-light);}
+  .star.on{color:var(--star);text-shadow:0 2px 6px rgba(255,201,60,.5);}
+  .star:active{transform:scale(.82);}
+  .star.pop{animation:pop .35s ease;}
+  @keyframes pop{0%{transform:scale(.82);}60%{transform:scale(1.2);}100%{transform:scale(1);}}
+  .empty{text-align:center;padding:48px 20px;color:var(--muted);}
+  .empty .big{font-size:52px;margin-bottom:12px;}
+  .empty a{color:var(--pink);font-weight:700;cursor:pointer;}
+  .add-btn{
+    width:100%;border:2.5px dashed var(--pink);background:var(--pink-soft);color:var(--pink);
+    font-size:15px;font-weight:700;padding:15px;border-radius:var(--radius);cursor:pointer;
+    transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:18px;
+  }
+  .add-btn:hover{background:var(--pink-light);transform:translateY(-1px);}
+  .hmanage-row{display:flex;align-items:center;gap:14px;background:var(--surface);border:2px solid var(--line);
+    border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow-soft);}
+  .hmanage-row .h-emoji{width:44px;height:44px;font-size:28px;}
+  .hmanage-row .h-meta{flex:1;}
+  .row-actions{display:flex;gap:6px;}
+  .row-actions .iconbtn{width:38px;height:38px;font-size:15px;}
+  .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px;}
+  .kpi-card{background:var(--surface);border:2px solid var(--line);border-radius:var(--radius);
+    padding:16px 14px;text-align:center;box-shadow:var(--shadow-soft);}
+  .kpi-card .ico{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font-size:18px;margin:0 auto 8px;}
+  .kpi-card.k1 .ico{background:var(--purple-light);color:var(--purple);}
+  .kpi-card.k2 .ico{background:var(--mint-light);color:#3aa68e;}
+  .kpi-card.k3 .ico{background:var(--yellow-light);color:#e6a700;}
+  .kpi-card.k4 .ico{background:var(--blue-light);color:#3b96c4;}
+  .kpi-card .k{font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:3px;}
+  .kpi-card .v{font-size:23px;font-weight:800;letter-spacing:-.5px;}
+  .kpi-card .v small{font-size:13px;color:var(--muted);font-weight:700;margin-left:2px;}
+  .panel{background:var(--surface);border:2px solid var(--line);border-radius:var(--radius);
+    padding:20px;margin-bottom:18px;box-shadow:var(--shadow-soft);}
+  .panel-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .panel-h h3{margin:0;font-size:15px;font-weight:800;}
+  .panel-h .sub{font-size:12.5px;color:var(--muted);font-weight:600;}
+  #trend{width:100%;height:160px;display:block;}
+  .trend-x{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:8px;font-weight:600;}
+  .hm-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .hm-month{font-size:15px;font-weight:800;}
+  .hm-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+  .hm-dow{font-size:11px;color:var(--muted);text-align:center;font-weight:700;padding-bottom:2px;}
+  .hm-cell{aspect-ratio:1;border-radius:9px;background:var(--line-soft);display:grid;place-items:center;
+    font-size:12px;color:var(--muted);font-weight:700;transition:transform .1s;}
+  .hm-cell.future{opacity:.4;}
+  .hm-cell.has{color:#fff;cursor:pointer;}
+  .hm-cell.today{outline:2.5px solid var(--pink);outline-offset:-2px;}
+  .hm-cell:hover.has{transform:scale(1.1);}
+  .hm-legend{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);margin-top:14px;justify-content:flex-end;font-weight:600;}
+  .hm-legend i{width:14px;height:14px;border-radius:5px;display:inline-block;}
+  .ph{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line-soft);}
+  .ph:last-child{border-bottom:none;}
+  .ph .emo{font-size:26px;width:40px;height:40px;text-align:center;flex:none;display:grid;place-items:center;background:var(--bg);border-radius:13px;}
+  .ph .info{flex:1;min-width:0;}
+  .ph .pn{font-size:15px;font-weight:700;}
+  .ph .pmeta{font-size:12px;color:var(--muted);margin-top:2px;font-weight:600;}
+  .ph .bar{height:9px;background:var(--line);border-radius:5px;margin-top:8px;overflow:hidden;}
+  .ph .bar i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--pink),var(--purple));transition:width .5s ease;}
+  .ph .pct{font-size:16px;font-weight:800;color:var(--pink);flex:none;width:50px;text-align:right;}
+  .overlay{position:fixed;inset:0;background:rgba(91,74,90,.34);z-index:60;display:none;
+    align-items:flex-end;justify-content:center;padding:0;}
+  .overlay.show{display:flex;}
+  .modal{background:var(--surface);width:100%;max-width:460px;border-radius:28px 28px 0 0;
+    padding:24px 22px calc(24px + env(safe-area-inset-bottom));animation:sheet .26s cubic-bezier(.22,1,.36,1);}
+  @keyframes sheet{from{transform:translateY(40px);opacity:.5}to{transform:translateY(0);opacity:1}}
+  .modal h3{margin:0 0 4px;font-size:19px;font-weight:800;}
+  .modal .msub{font-size:13.5px;color:var(--muted);margin-bottom:20px;font-weight:600;}
+  .field{margin-bottom:18px;}
+  .field label{display:block;font-size:13px;font-weight:700;color:var(--ink-soft);margin-bottom:8px;}
+  .field input[type=text]{
+    width:100%;border:2px solid var(--line);border-radius:14px;padding:13px 15px;font-size:16px;
+    font-family:inherit;color:var(--ink);background:var(--bg);outline:none;transition:border .15s;font-weight:600;
+  }
+  .field input:focus{border-color:var(--pink);background:var(--surface);}
+  .emo-pal{display:flex;flex-wrap:wrap;gap:8px;}
+  .emo-pal button{width:46px;height:46px;border-radius:14px;border:2px solid var(--line);background:var(--bg);
+    font-size:24px;cursor:pointer;display:grid;place-items:center;transition:all .12s;}
+  .emo-pal button:hover{border-color:var(--pink);transform:translateY(-2px);}
+  .emo-pal button.sel{border-color:var(--pink);background:var(--pink-soft);transform:scale(1.06);}
+  .modal-actions{display:flex;gap:10px;margin-top:8px;}
+  .btn{flex:1;padding:14px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;border:none;transition:all .15s;}
+  .btn-ghost{background:var(--bg);color:var(--ink-soft);border:2px solid var(--line);}
+  .btn-ghost:hover{background:var(--line-soft);}
+  .btn-primary{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;box-shadow:var(--shadow);}
+  .btn-primary:hover{filter:brightness(1.05);}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(24px);
+    background:var(--ink);color:#fff;padding:12px 22px;border-radius:16px;font-size:14px;font-weight:600;
+    opacity:0;pointer-events:none;transition:all .3s;z-index:80;box-shadow:0 6px 24px rgba(0,0,0,.2);}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .data-tools{display:flex;gap:8px;justify-content:flex-end;}
+  .data-tools button{font-size:12.5px;font-weight:700;color:var(--ink-soft);background:var(--surface);border:2px solid var(--line);cursor:pointer;padding:8px 14px;border-radius:12px;transition:all .15s;}
+  .data-tools button:hover{border-color:var(--pink);color:var(--pink);}
+  .celebrate{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;
+    background:rgba(255,248,252,.88);backdrop-filter:blur(4px);}
+  .celebrate.show{display:flex;animation:cfade .3s ease;}
+  @keyframes cfade{from{opacity:0}to{opacity:1}}
+  .cel-card{text-align:center;padding:30px;animation:cbounce .5s cubic-bezier(.22,1.4,.36,1);}
+  @keyframes cbounce{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+  .cel-card .masc{width:140px;height:140px;margin:0 auto 16px;animation:wiggle 1.6s ease-in-out infinite;}
+  @keyframes wiggle{0%,100%{transform:rotate(-5deg);}50%{transform:rotate(5deg);}}
+  .cel-card h2{font-size:26px;font-weight:800;margin:0 0 8px;
+    background:linear-gradient(135deg,var(--pink),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .cel-card p{font-size:16px;color:var(--ink-soft);margin:0 0 22px;font-weight:600;}
+  .cel-card .btn{max-width:200px;margin:0 auto;}
+  .confetti{position:fixed;top:-20px;font-size:20px;z-index:91;pointer-events:none;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.6;}}
+  .view{display:none;}
+  .view.active{display:block;animation:fade .3s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .hero-banner{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,var(--pink-soft),var(--purple-light));
+    border-radius:var(--radius);padding:16px 20px;margin-bottom:22px;box-shadow:var(--shadow-soft);}
+  .hero-banner .masc{width:62px;height:62px;flex:none;animation:bob 3s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  .hero-banner .ht{flex:1;}
+  .hero-banner .ht .t{font-size:18px;font-weight:800;}
+  .hero-banner .ht .s{font-size:13px;color:var(--ink-soft);font-weight:600;margin-top:2px;}
+  @media(max-width:640px){
+    .summary{grid-template-columns:repeat(2,1fr);}
+    .kpi{grid-template-columns:repeat(2,1fr);}
+    .date-label{min-width:0;font-size:17px;}
+    .top-in{padding:0 12px;gap:8px;}
+    main{padding:18px 12px 0;}
+    .brand{font-size:17px;} .brand .masc{width:30px;height:30px;}
+    .tab{padding:7px 11px;font-size:13px;}
+    .star{width:40px;height:40px;font-size:27px;}
+    .h-emoji{font-size:30px;width:44px;height:44px;}
+    .habit-row{padding:13px 13px;gap:11px;}
+  }
+</style>
+</head>
+<body>
+<div class="bg-deco"><span>✨</span><span>⭐</span><span>💖</span><span>✨</span></div>
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <svg class="masc" viewBox="0 0 100 100" aria-hidden="true">
+        <ellipse cx="38" cy="26" rx="7" ry="18" fill="#fff"/>
+        <ellipse cx="38" cy="28" rx="3.5" ry="12" fill="#ffd6e8"/>
+        <ellipse cx="62" cy="26" rx="7" ry="18" fill="#fff"/>
+        <ellipse cx="62" cy="28" rx="3.5" ry="12" fill="#ffd6e8"/>
+        <circle cx="50" cy="58" r="24" fill="#fff"/>
+        <circle cx="41" cy="56" r="3.5" fill="#5b4a5a"/>
+        <circle cx="59" cy="56" r="3.5" fill="#5b4a5a"/>
+        <circle cx="42" cy="54.5" r="1.3" fill="#fff"/>
+        <circle cx="60" cy="54.5" r="1.3" fill="#fff"/>
+        <path d="M47 64 Q50 67 53 64 Z" fill="#ff8fab"/>
+        <circle cx="34" cy="62" r="3.5" fill="#ffd6e8" opacity=".85"/>
+        <circle cx="66" cy="62" r="3.5" fill="#ffd6e8" opacity=".85"/>
+      </svg>
+      暑假打卡<span class="sparkles">✨</span>
+    </div>
+    <nav class="tabs">
+      <button class="tab active" data-view="today">今日</button>
+      <button class="tab" data-view="habits">习惯</button>
+      <button class="tab" data-view="data">数据</button>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="view active" id="view-today">
+    <div class="hero-banner">
+      <svg class="masc" viewBox="0 0 100 100" aria-hidden="true">
+        <ellipse cx="36" cy="24" rx="7" ry="17" fill="#fff"/>
+        <ellipse cx="36" cy="26" rx="3.5" ry="11" fill="#ffd6e8"/>
+        <ellipse cx="64" cy="24" rx="7" ry="17" fill="#fff"/>
+        <ellipse cx="64" cy="26" rx="3.5" ry="11" fill="#ffd6e8"/>
+        <circle cx="50" cy="50" r="22" fill="#fff"/>
+        <circle cx="41" cy="48" r="3.5" fill="#5b4a5a"/>
+        <circle cx="59" cy="48" r="3.5" fill="#5b4a5a"/>
+        <circle cx="42" cy="46.5" r="1.3" fill="#fff"/>
+        <circle cx="60" cy="46.5" r="1.3" fill="#fff"/>
+        <path d="M47 56 Q50 59 53 56 Z" fill="#ff8fab"/>
+        <path d="M50 58 Q47 61 45 60" stroke="#5b4a5a" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <path d="M50 58 Q53 61 55 60" stroke="#5b4a5a" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <circle cx="34" cy="54" r="3.5" fill="#ffd6e8"/>
+        <circle cx="66" cy="54" r="3.5" fill="#ffd6e8"/>
+        <ellipse cx="50" cy="80" rx="17" ry="13" fill="#fff"/>
+        <ellipse cx="43" cy="91" rx="6" ry="3.5" fill="#fff"/>
+        <ellipse cx="57" cy="91" rx="6" ry="3.5" fill="#fff"/>
+        <ellipse cx="33" cy="76" rx="4" ry="6" fill="#fff" transform="rotate(-18 33 76)"/>
+        <ellipse cx="67" cy="76" rx="4" ry="6" fill="#fff" transform="rotate(18 67 76)"/>
+        <text x="78" y="40" font-size="13">💖</text>
+      </svg>
+      <div class="ht">
+        <div class="t" id="hero-title">早上好呀～今天也要加油哦！</div>
+        <div class="s" id="hero-sub">点一点小星星，记录今天的习惯吧～</div>
+      </div>
+    </div>
+    <div class="datebar">
+      <div class="date-nav">
+        <button class="iconbtn" id="d-prev">‹</button>
+        <div class="date-label" id="date-label"></div>
+        <button class="iconbtn" id="d-next">›</button>
+      </div>
+      <button class="pill-btn" id="d-today">今天</button>
+    </div>
+    <div class="summary" id="today-summary"></div>
+    <h2 class="stitle">今日打卡 <span class="line"></span></h2>
+    <div class="habits" id="today-list"></div>
+  </section>
+  <section class="view" id="view-habits">
+    <h2 class="stitle">我的习惯 <span class="line"></span></h2>
+    <button class="add-btn" id="add-habit">＋ 添加新习惯</button>
+    <div class="habits" id="manage-list"></div>
+  </section>
+  <section class="view" id="view-data">
+    <h2 class="stitle">打卡小报告 <span class="line"></span></h2>
+    <div class="kpi" id="kpi"></div>
+    <div class="panel">
+      <div class="panel-h">
+        <h3>近 30 天完成趋势</h3>
+        <span class="sub" id="trend-sub"></span>
+      </div>
+      <svg id="trend" preserveAspectRatio="none"></svg>
+      <div class="trend-x" id="trend-x"></div>
+    </div>
+    <div class="panel">
+      <div class="hm-head">
+        <div class="hm-month" id="hm-month"></div>
+        <div class="date-nav">
+          <button class="iconbtn" id="hm-prev">‹</button>
+          <button class="iconbtn" id="hm-next">›</button>
+        </div>
+      </div>
+      <div class="hm-grid" id="hm-dow"></div>
+      <div class="hm-grid" id="hm-grid" style="margin-top:6px;"></div>
+      <div class="hm-legend">
+        少 <i style="background:var(--line-soft)"></i><i style="background:#ffc1d9"></i><i style="background:#ff8fab"></i><i style="background:#b9a4f0"></i><i style="background:var(--purple)">多</i>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>每个习惯的完成情况</h3><span class="sub">近 30 天</span></div>
+      <div id="per-habit"></div>
+    </div>
+    <div class="data-tools">
+      <button id="export-btn">导出备份</button>
+      <button id="import-btn">导入备份</button>
+      <input type="file" id="import-file" accept="application/json" style="display:none">
+    </div>
+  </section>
+</main>
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal">
+    <h3 id="m-title">添加新习惯</h3>
+    <div class="msub" id="msub">给它起个可爱的名字，选个小图标吧～</div>
+    <div class="field">
+      <label>习惯名字</label>
+      <input type="text" id="m-name" placeholder="如：阅读书籍" maxlength="16">
+    </div>
+    <div class="field">
+      <label>选个小图标</label>
+      <div class="emo-pal" id="emo-pal"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="m-cancel">取消</button>
+      <button class="btn btn-primary" id="m-save">保存</button>
+    </div>
+  </div>
+</div>
+<div class="celebrate" id="celebrate">
+  <div class="cel-card">
+    <svg class="masc" viewBox="0 0 100 100" aria-hidden="true">
+      <ellipse cx="36" cy="22" rx="7" ry="17" fill="#fff"/>
+      <ellipse cx="36" cy="24" rx="3.5" ry="11" fill="#ffd6e8"/>
+      <ellipse cx="64" cy="22" rx="7" ry="17" fill="#fff"/>
+      <ellipse cx="64" cy="24" rx="3.5" ry="11" fill="#ffd6e8"/>
+      <circle cx="50" cy="48" r="22" fill="#fff"/>
+      <path d="M38 46 Q41 43 44 46" stroke="#5b4a5a" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M56 46 Q59 43 62 46" stroke="#5b4a5a" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M47 55 Q50 58 53 55 Z" fill="#ff8fab"/>
+      <path d="M50 57 Q44 63 40 60" stroke="#5b4a5a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <path d="M50 57 Q56 63 60 60" stroke="#5b4a5a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <circle cx="34" cy="53" r="4" fill="#ffd6e8"/>
+      <circle cx="66" cy="53" r="4" fill="#ffd6e8"/>
+      <ellipse cx="50" cy="80" rx="17" ry="13" fill="#fff"/>
+      <ellipse cx="43" cy="91" rx="6" ry="3.5" fill="#fff"/>
+      <ellipse cx="57" cy="91" rx="6" ry="3.5" fill="#fff"/>
+      <ellipse cx="30" cy="70" rx="4" ry="7" fill="#fff" transform="rotate(-40 30 70)"/>
+      <ellipse cx="70" cy="70" rx="4" ry="7" fill="#fff" transform="rotate(40 70 70)"/>
+      <text x="14" y="34" font-size="14">⭐</text>
+      <text x="78" y="34" font-size="14">⭐</text>
+    </svg>
+    <h2>你太棒啦！</h2>
+    <p>今天全部习惯都完成啦～给自己鼓鼓掌！🎉</p>
+    <button class="btn btn-primary" id="cel-close">好耶！</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+"use strict";
+const KH='habit_tracker_habits', KR='habit_tracker_records';
+const EMOJIS=['🏠','🧹','📖','🎧','🧮','🏃','💧','🧘','📝','🌱','💻','🎵','✏️','🛏️','🍳','🦷','🎯','🎨','🎸','📚','🧩','⚽','🚶','🥗','☀️','🌙','💪','❤️','🦄','🌟','🌈','🎀','🍓','🍬','🪥','🧴'];
+const DOW=['日','一','二','三','四','五','六'];
+const state={habits:[],records:{},view:'today',date:new Date(),hmDate:new Date(),editingId:null,emoji:'🌱',celebrated:{}};
+function load(){
+  try{state.habits=JSON.parse(localStorage.getItem(KH))||[];}catch(e){state.habits=[];}
+  try{state.records=JSON.parse(localStorage.getItem(KR))||{};}catch(e){state.records={};}
+  try{state.celebrated=JSON.parse(localStorage.getItem('habit_tracker_cel'))||{};}catch(e){state.celebrated={};}
+  if(!state.habits.length){
+    state.habits=[
+      {id:uid(),name:'做家务',emoji:'🧹',createdAt:Date.now()},
+      {id:uid(),name:'整理物品',emoji:'🏠',createdAt:Date.now()},
+      {id:uid(),name:'阅读书籍',emoji:'📖',createdAt:Date.now()},
+      {id:uid(),name:'听英语',emoji:'🎧',createdAt:Date.now()},
+      {id:uid(),name:'做计算题',emoji:'🧮',createdAt:Date.now()},
+    ];
+    saveHabits();
+  }
+}
+function saveHabits(){localStorage.setItem(KH,JSON.stringify(state.habits));}
+function saveRecords(){localStorage.setItem(KR,JSON.stringify(state.records));}
+function saveCel(){localStorage.setItem('habit_tracker_cel',JSON.stringify(state.celebrated));}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function ymd(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x;}
+function todayYmd(){return ymd(new Date());}
+function rating(hid,ds){const r=state.records[ds];return r?r[hid]||0:0;}
+function setRating(hid,ds,n){
+  if(!state.records[ds])state.records[ds]={};
+  if(n>0)state.records[ds][hid]=n;else delete state.records[ds][hid];
+  if(Object.keys(state.records[ds]).length===0)delete state.records[ds];
+  saveRecords();
+}
+function dayTotal(ds){let s=0;const r=state.records[ds];if(r)for(const k in r)s+=r[k];return s;}
+function allDone(ds){return state.habits.length>0 && state.habits.every(h=>rating(h.id,ds)>=1);}
+function streak(hid){
+  let s=0;let cur=new Date();
+  if(rating(hid,ymd(cur))<1)cur=addDays(cur,-1);
+  while(rating(hid,ymd(cur))>=1){s++;cur=addDays(cur,-1);}
+  return s;
+}
+function bestStreak(hid){
+  let best=0,cur=0;const d=new Date();d.setHours(0,0,0,0);
+  for(let i=0;i<400;i++){if(rating(hid,ymd(d))>=1){cur++;if(cur>best)best=cur;}else cur=0;d.setDate(d.getDate()-1);}
+  return best;
+}
+function rate30(hid){let done=0;const d=new Date();for(let i=0;i<30;i++){if(rating(hid,ymd(d))>=1)done++;d.setDate(d.getDate()-1);}return done/30;}
+function streakAll(){
+  let s=0;let cur=new Date();
+  if(dayTotal(ymd(cur))<1)cur=addDays(cur,-1);
+  while(dayTotal(ymd(cur))>=1){s++;cur=addDays(cur,-1);}
+  return s;
+}
+function countDone(hid){let n=0;for(const ds in state.records)if(state.records[ds][hid])n++;return n;}
+function greeting(){
+  const h=new Date().getHours();
+  if(h<6)return['夜深啦～快去睡觉吧！','早点休息，明天再打卡哦～'];
+  if(h<11)return['早上好呀～今天也要加油哦！','点一点小星星，记录今天的习惯吧～'];
+  if(h<14)return['中午好～吃完饭休息一下吧！','别忘了打卡今天的习惯哦～'];
+  if(h<18)return['下午好呀～精神满满地继续吧！','还有几个习惯没打卡呢～'];
+  if(h<22)return['晚上好～今天辛苦啦！','来记录一下今天的习惯吧～'];
+  return['晚上好～该准备睡觉啦！','今天的事今天做完哦～'];
+}
+function render(){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.view===state.view));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+state.view).classList.add('active');
+  if(state.view==='today')renderToday();
+  else if(state.view==='habits')renderHabits();
+  else renderData();
+}
+function renderToday(){
+  const ds=ymd(state.date);
+  const isToday=ds===todayYmd();
+  const[g1,g2]=greeting();
+  document.getElementById('hero-title').textContent=isToday?g1:'来看看这一天的打卡吧～';
+  document.getElementById('hero-sub').textContent=isToday?g2:'可以补打卡哦，点星星就行～';
+  const lbl=document.getElementById('date-label');
+  lbl.innerHTML=`${state.date.getMonth()+1}月${state.date.getDate()}日 周${DOW[state.date.getDay()]}<small>${isToday?'今天 ✨':state.date.getFullYear()+'年'+(state.date.getMonth()+1)+'月'}</small>`;
+  const total=state.habits.length;
+  let done=0,stars=0;
+  state.habits.forEach(h=>{const r=rating(h.id,ds);if(r>=1){done++;stars+=r;}});
+  const max=total*3;
+  const avg=done?(stars/done).toFixed(1):'—';
+  const cont=streakAll();
+  document.getElementById('today-summary').innerHTML=`
+    <div class="sum-card c1"><div class="ico">✅</div><div class="k">今日完成</div><div class="v num">${done}<small>/${total}</small></div></div>
+    <div class="sum-card c2"><div class="ico">⭐</div><div class="k">获得星星</div><div class="v num">${stars}<small>/${max}</small></div></div>
+    <div class="sum-card c3"><div class="ico">🌟</div><div class="k">平均星级</div><div class="v num">${avg}<small>${done?' ★':''}</small></div></div>
+    <div class="sum-card c4"><div class="ico">🔥</div><div class="k">连续打卡</div><div class="v num">${cont}<small> 天</small></div></div>`;
+  const list=document.getElementById('today-list');
+  if(!total){list.innerHTML=`<div class="empty"><div class="big">📋</div>还没有习惯哦，先去<a onclick="go('habits')">添加几个</a>吧～</div>`;return;}
+  list.innerHTML=state.habits.map(h=>{
+    const r=rating(h.id,ds);
+    const sk=streak(h.id);
+    return `<div class="habit-row ${r>=1?'done':''}">
+      <div class="h-emoji">${h.emoji}</div>
+      <div class="h-meta">
+        <div class="h-name">${esc(h.name)}</div>
+        <div class="h-sub">${r>=1?`已坚持 ${sk} 天，继续加油！`:'还没打卡，点星星开始～'}</div>
+      </div>
+      <div class="stars" data-hid="${h.id}">
+        ${[1,2,3].map(n=>`<button class="star ${n<=r?'on':''}" data-n="${n}" aria-label="${n}星">★</button>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+  list.querySelectorAll('.stars').forEach(grp=>{
+    const hid=grp.dataset.hid;
+    grp.querySelectorAll('.star').forEach(b=>{
+      b.addEventListener('click',()=>{
+        const n=+b.dataset.n;const cur=rating(hid,ds);
+        setRating(hid,ds,n===cur?0:n);
+        b.classList.add('pop');setTimeout(()=>b.classList.remove('pop'),360);
+        renderToday();
+        if(allDone(ds)&&isToday&&!state.celebrated[ds]){state.celebrated[ds]=1;saveCel();celebrate();}
+      });
+    });
+  });
+}
+function renderHabits(){
+  const list=document.getElementById('manage-list');
+  if(!state.habits.length){list.innerHTML=`<div class="empty"><div class="big">📋</div>点击上方“添加新习惯”开始吧～</div>`;return;}
+  list.innerHTML=state.habits.map(h=>{
+    const sk=streak(h.id);
+    return `<div class="hmanage-row">
+      <div class="h-emoji">${h.emoji}</div>
+      <div class="h-meta">
+        <div class="h-name">${esc(h.name)}</div>
+        <div class="h-sub">已坚持 ${sk} 天 · 累计打卡 ${countDone(h.id)} 天</div>
+      </div>
+      <div class="row-actions">
+        <button class="iconbtn" title="编辑" data-edit="${h.id}">✎</button>
+        <button class="iconbtn" title="删除" data-del="${h.id}" style="color:var(--pink);border-color:var(--pink-light)">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+  list.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.edit)));
+  list.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>delHabit(b.dataset.del)));
+}
+function delHabit(id){
+  const h=state.habits.find(x=>x.id===id);
+  if(!h)return;
+  if(!confirm(`确定要删除“${h.name}”吗？\n它的打卡记录也会一起删掉哦～`))return;
+  state.habits=state.habits.filter(x=>x.id!==id);
+  for(const ds in state.records){delete state.records[ds][id];if(!Object.keys(state.records[ds]).length)delete state.records[ds];}
+  saveHabits();saveRecords();renderHabits();toast('已删除～');
+}
+function openModal(id){
+  state.editingId=id||null;
+  const pal=document.getElementById('emo-pal');
+  if(id){const h=state.habits.find(x=>x.id===id);state.emoji=h.emoji;document.getElementById('m-title').textContent='编辑习惯';document.getElementById('msub').textContent='改一下名字或图标吧～';document.getElementById('m-name').value=h.name;}
+  else{state.emoji='🌱';document.getElementById('m-title').textContent='添加新习惯';document.getElementById('msub').textContent='给它起个可爱的名字，选个小图标吧～';document.getElementById('m-name').value='';}
+  pal.innerHTML=EMOJIS.map(e=>`<button class="${e===state.emoji?'sel':''}" data-e="${e}">${e}</button>`).join('');
+  pal.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    state.emoji=b.dataset.e;pal.querySelectorAll('button').forEach(x=>x.classList.toggle('sel',x.dataset.e===state.emoji));
+  }));
+  document.getElementById('overlay').classList.add('show');
+  setTimeout(()=>document.getElementById('m-name').focus(),80);
+}
+function closeModal(){document.getElementById('overlay').classList.remove('show');state.editingId=null;}
+function saveModal(){
+  const name=document.getElementById('m-name').value.trim();
+  if(!name){toast('请先写个名字哦～');return;}
+  if(state.editingId){const h=state.habits.find(x=>x.id===state.editingId);h.name=name;h.emoji=state.emoji;}
+  else{state.habits.push({id:uid(),name,emoji:state.emoji,createdAt:Date.now()});}
+  saveHabits();closeModal();render();toast('保存成功～');
+}
+function celebrate(){
+  const cel=document.getElementById('celebrate');
+  cel.classList.add('show');
+  const emojis=['🎉','✨','💖','🌟','🌈','🦄','⭐','🍬','🎀','🎊'];
+  for(let i=0;i<28;i++){
+    const c=document.createElement('div');c.className='confetti';
+    c.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    c.style.left=Math.random()*100+'vw';
+    c.style.animationDuration=(2.4+Math.random()*1.8)+'s';
+    c.style.animationDelay=Math.random()*0.6+'s';
+    c.style.fontSize=(16+Math.random()*16)+'px';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),5200);
+  }
+}
+document.getElementById('cel-close').addEventListener('click',()=>document.getElementById('celebrate').classList.remove('show'));
+function renderData(){
+  const d=new Date();
+  let wkDone=0,wkMax=0;
+  for(let i=0;i<7;i++){const ds=ymd(d);wkMax+=state.habits.length;state.habits.forEach(h=>{if(rating(h.id,ds)>=1)wkDone++;});d.setDate(d.getDate()-1);}
+  const allBest=Math.max(0,...state.habits.map(bestStreak));
+  document.getElementById('kpi').innerHTML=`
+    <div class="kpi-card k1"><div class="ico">📅</div><div class="k">累计打卡</div><div class="v num">${Object.keys(state.records).length}<small>天</small></div></div>
+    <div class="kpi-card k2"><div class="ico">📈</div><div class="k">本周完成率</div><div class="v num">${wkMax?Math.round(wkDone/wkMax*100):0}<small>%</small></div></div>
+    <div class="kpi-card k3"><div class="ico">🏆</div><div class="k">最长连续</div><div class="v num">${allBest}<small>天</small></div></div>
+    <div class="kpi-card k4"><div class="ico">📝</div><div class="k">习惯数量</div><div class="v num">${state.habits.length}<small>项</small></div></div>`;
+  renderTrend();renderHeatmap();renderPerHabit();
+}
+function renderTrend(){
+  const svg=document.getElementById('trend');
+  const W=svg.clientWidth||600,H=160,pad=4;
+  const days=[];const d=new Date();
+  for(let i=29;i>=0;i--){const dd=addDays(d,-i);const ds=ymd(dd);const tot=dayTotal(ds);const max=state.habits.length*3||1;days.push({ds,ratio:max?tot/max:0,tot,dd});}
+  const bw=(W-pad*2)/days.length;
+  let bars='';
+  days.forEach((dy,i)=>{
+    const x=pad+i*bw;const bh=Math.max(dy.ratio>0?4:0,dy.ratio*(H-pad*2));const y=H-pad-bh;
+    const col=dy.ratio>=.8?'#b9a4f0':dy.ratio>=.5?'#ff8fab':dy.ratio>0?'#ffc1d9':'#f0e6f0';
+    bars+=`<rect x="${x+2}" y="${y}" width="${Math.max(2,bw-4)}" height="${bh}" rx="4" fill="${col}"><title>${dy.ds.slice(5)} ${dy.tot}星</title></rect>`;
+  });
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.innerHTML=bars;
+  document.getElementById('trend-x').innerHTML=`<span>${days[0].ds.slice(5)}</span><span>${days[10].ds.slice(5)}</span><span>${days[20].ds.slice(5)}</span><span>今天</span>`;
+  const avg=days.reduce((a,b)=>a+b.ratio,0)/days.length;
+  document.getElementById('trend-sub').textContent=`平均 ${Math.round(avg*100)}%`;
+}
+function renderHeatmap(){
+  const y=state.hmDate.getFullYear(),m=state.hmDate.getMonth();
+  document.getElementById('hm-month').textContent=`${y}年${m+1}月`;
+  document.getElementById('hm-dow').innerHTML=['一','二','三','四','五','六','日'].map(d=>`<div class="hm-dow">${d}</div>`).join('');
+  const first=new Date(y,m,1);const startOff=(first.getDay()+6)%7;
+  const daysInMon=new Date(y,m+1,0).getDate();
+  const cells=[];for(let i=0;i<startOff;i++)cells.push('<div></div>');
+  const tdy=todayYmd();const max=state.habits.length*3||1;
+  for(let day=1;day<=daysInMon;day++){
+    const ds=ymd(new Date(y,m,day));const tot=dayTotal(ds);const ratio=max?tot/max:0;
+    let bg='var(--line-soft)';
+    if(ratio>0)bg=ratio>=.8?'#b9a4f0':ratio>=.5?'#ff8fab':ratio>=.3?'#ffc1d9':'#ffd6e8';
+    const future=ds>tdy,isToday=ds===tdy;
+    cells.push(`<div class="hm-cell ${tot?'has':''} ${future?'future':''} ${isToday?'today':''}" style="${tot?'background:'+bg:''}" title="${ds} ${tot}星">${day}</div>`);
+  }
+  document.getElementById('hm-grid').innerHTML=cells.join('');
+}
+function renderPerHabit(){
+  const el=document.getElementById('per-habit');
+  if(!state.habits.length){el.innerHTML='<div class="empty" style="padding:20px">还没有习惯哦～</div>';return;}
+  el.innerHTML=state.habits.map(h=>{
+    const r=rate30(h.id),sk=streak(h.id),bs=bestStreak(h.id);
+    let s=0,n=0;const d=new Date();for(let i=0;i<30;i++){const v=rating(h.id,ymd(d));if(v>=1){s+=v;n++;}d.setDate(d.getDate()-1);}
+    const avg=n?(s/n).toFixed(1):'—';
+    return `<div class="ph">
+      <div class="emo">${h.emoji}</div>
+      <div class="info">
+        <div class="pn">${esc(h.name)}</div>
+        <div class="pmeta">当前连续 ${sk} 天 · 最长 ${bs} 天 · 平均 ${avg} ★</div>
+        <div class="bar"><i style="width:${Math.round(r*100)}%"></i></div>
+      </div>
+      <div class="pct">${Math.round(r*100)}%</div>
+    </div>`;
+  }).join('');
+}
+function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+let toastT;
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1700);}
+function go(v){state.view=v;render();window.scrollTo({top:0,behavior:'smooth'});}
+function exportData(){
+  const blob=new Blob([JSON.stringify({habits:state.habits,records:state.records,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`习惯打卡_${todayYmd()}.json`;a.click();
+  URL.revokeObjectURL(a.href);toast('已导出备份～');
+}
+function importData(file){
+  const r=new FileReader();
+  r.onload=()=>{
+    try{const d=JSON.parse(r.result);
+      if(!Array.isArray(d.habits)||typeof d.records!=='object')throw 0;
+      state.habits=d.habits;state.records=d.records;saveHabits();saveRecords();render();toast('导入成功～');
+    }catch(e){toast('导入失败：文件不对哦');}
+  };
+  r.readAsText(file);
+}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>go(t.dataset.view)));
+document.getElementById('d-prev').addEventListener('click',()=>{state.date=addDays(state.date,-1);renderToday();});
+document.getElementById('d-next').addEventListener('click',()=>{state.date=addDays(state.date,1);renderToday();});
+document.getElementById('d-today').addEventListener('click',()=>{state.date=new Date();renderToday();});
+document.getElementById('add-habit').addEventListener('click',()=>openModal());
+document.getElementById('m-cancel').addEventListener('click',closeModal);
+document.getElementById('m-save').addEventListener('click',saveModal);
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')closeModal();});
+document.getElementById('m-name').addEventListener('keydown',e=>{if(e.key==='Enter')saveModal();});
+document.getElementById('hm-prev').addEventListener('click',()=>{state.hmDate=new Date(state.hmDate.getFullYear(),state.hmDate.getMonth()-1,1);renderHeatmap();});
+document.getElementById('hm-next').addEventListener('click',()=>{state.hmDate=new Date(state.hmDate.getFullYear(),state.hmDate.getMonth()+1,1);renderHeatmap();});
+document.getElementById('export-btn').addEventListener('click',exportData);
+document.getElementById('import-btn').addEventListener('click',()=>document.getElementById('import-file').click());
+document.getElementById('import-file').addEventListener('change',e=>{if(e.target.files[0])importData(e.target.files[0]);e.target.value='';});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();document.getElementById('celebrate').classList.remove('show');}});
+window.addEventListener('resize',()=>{if(state.view==='data')renderTrend();});
+load();render();
+</script>
+</body>
+</html>
