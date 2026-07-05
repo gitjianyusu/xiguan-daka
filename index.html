@@ -209,6 +209,37 @@
   .data-tools button{font-size:12.5px;font-weight:700;color:var(--ink-soft);background:var(--surface);border:2px solid var(--line);cursor:pointer;padding:8px 14px;border-radius:12px;transition:all .15s;}
   .data-tools button:hover{border-color:var(--pink);color:var(--pink);}
   .backup-note{font-size:12.5px;color:var(--muted);font-weight:600;text-align:right;margin:-4px 0 10px;}
+  .summer-progress{background:linear-gradient(135deg,var(--yellow-light),var(--pink-soft));border-color:var(--yellow-light);}
+  .summer-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;}
+  .summer-top h3{margin:0;font-size:17px;font-weight:800;}
+  .summer-top p{margin:3px 0 0;font-size:13px;color:var(--ink-soft);font-weight:700;}
+  .summer-pct{font-size:28px;font-weight:800;color:var(--pink);font-variant-numeric:tabular-nums;line-height:1;}
+  .summer-bar{height:14px;background:rgba(255,255,255,.72);border:2px solid rgba(255,255,255,.8);border-radius:9px;overflow:hidden;}
+  .summer-bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--pink),var(--yellow),var(--mint));transition:width .5s ease;}
+  .summer-foot{display:flex;justify-content:space-between;gap:10px;margin-top:10px;font-size:12px;color:var(--ink-soft);font-weight:700;}
+  .reward-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:12px;margin-bottom:18px;}
+  .weekly-note{background:var(--surface);border:2px solid var(--mint-light);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-soft);}
+  .weekly-note h3,.badges h3{margin:0 0 10px;font-size:15px;font-weight:800;}
+  .weekly-note .line{font-size:15px;font-weight:800;margin-bottom:8px;color:#3aa68e;}
+  .weekly-note p{font-size:13px;color:var(--ink-soft);font-weight:650;margin:0;line-height:1.6;}
+  .badges{background:var(--surface);border:2px solid var(--purple-light);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-soft);}
+  .badge-list{display:flex;gap:8px;flex-wrap:wrap;}
+  .badge{display:flex;align-items:center;gap:7px;border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:8px 10px;font-size:12px;font-weight:800;color:var(--muted);}
+  .badge.on{border-color:var(--yellow);background:var(--yellow-light);color:var(--ink);}
+  .badge .medal{font-size:18px;line-height:1;}
+  .cert-panel{display:flex;align-items:center;justify-content:space-between;gap:16px;background:linear-gradient(135deg,var(--purple-light),var(--blue-light));border:2px solid var(--purple-light);border-radius:var(--radius);padding:18px 20px;margin-bottom:18px;box-shadow:var(--shadow-soft);}
+  .cert-panel h3{margin:0 0 4px;font-size:16px;font-weight:800;}
+  .cert-panel p{margin:0;font-size:13px;color:var(--ink-soft);font-weight:700;}
+  .cert-panel .pill-btn{background:var(--surface);border-color:rgba(255,255,255,.9);white-space:nowrap;}
+  .cert-card{background:var(--surface);width:min(92vw,520px);border-radius:26px;padding:28px 24px;box-shadow:0 10px 42px rgba(91,74,90,.22);text-align:center;animation:csheet .26s cubic-bezier(.22,1,.36,1);}
+  .cert-card .cert-kicker{font-size:13px;color:var(--pink);font-weight:800;margin-bottom:4px;}
+  .cert-card h2{font-size:28px;font-weight:900;margin:0 0 8px;color:var(--ink);}
+  .cert-card .cert-sub{font-size:14px;color:var(--ink-soft);font-weight:700;margin:0 0 18px;}
+  .cert-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:18px;}
+  .cert-stat{background:var(--bg);border:2px solid var(--line);border-radius:16px;padding:14px 10px;}
+  .cert-stat .v{font-size:26px;font-weight:900;color:var(--pink);font-variant-numeric:tabular-nums;}
+  .cert-stat .k{font-size:12px;color:var(--muted);font-weight:800;margin-top:2px;}
+  .cert-seal{display:inline-grid;place-items:center;width:82px;height:82px;border-radius:50%;background:var(--yellow-light);border:3px solid var(--yellow);font-size:34px;margin-bottom:14px;box-shadow:var(--shadow-soft);}
   .celebrate{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;
     background:rgba(255,248,252,.88);backdrop-filter:blur(4px);}
   .celebrate.show{display:flex;animation:cfade .3s ease;}
@@ -236,6 +267,10 @@
   @media(max-width:640px){
     .summary{grid-template-columns:repeat(2,1fr);}
     .kpi{grid-template-columns:repeat(2,1fr);}
+    .reward-grid{grid-template-columns:1fr;}
+    .cert-panel{align-items:flex-start;flex-direction:column;}
+    .cert-panel .pill-btn{width:100%;}
+    .cert-stats{grid-template-columns:1fr 1fr;}
     .date-label{min-width:0;font-size:17px;}
     .top-in{padding:0 12px;gap:8px;}
     main{padding:18px 12px 0;}
@@ -300,13 +335,29 @@
   .calc-stat-card .k{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:3px;}
   .calc-history{background:var(--surface);border:2px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-soft);}
   .calc-history h3{margin:0 0 14px;font-size:15px;font-weight:800;}
-  .calc-hist-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line-soft);}
+  .calc-hist-row{width:100%;display:flex;align-items:center;gap:10px;padding:10px 0;border:0;border-bottom:1px solid var(--line-soft);background:none;font-family:inherit;color:inherit;text-align:left;cursor:pointer;}
   .calc-hist-row:last-child{border-bottom:none;}
+  .calc-hist-row:hover .date{color:var(--pink);}
+  .calc-hist-row.empty{cursor:default;}
+  .calc-hist-row.empty:hover .date{color:var(--muted);}
   .calc-hist-row .date{font-size:13px;color:var(--muted);font-weight:700;width:62px;flex:none;}
   .calc-hist-row .bar{flex:1;height:8px;background:var(--line);border-radius:4px;overflow:hidden;}
   .calc-hist-row .bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--pink),var(--purple));}
   .calc-hist-row .acc{font-size:15px;font-weight:800;flex:none;width:46px;text-align:right;}
   .calc-hist-row .dur{font-size:12px;color:var(--muted);font-weight:600;flex:none;width:52px;text-align:right;}
+  .calc-detail{max-height:72vh;overflow-y:auto;padding-right:2px;}
+  .calc-detail-head{text-align:center;margin-bottom:16px;}
+  .calc-detail-head h2{font-size:20px;font-weight:800;margin:0 0 6px;}
+  .calc-detail-head p{font-size:13px;color:var(--muted);font-weight:700;margin:0;}
+  .calc-problem-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+  .calc-problem-row{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:10px;background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:10px 12px;}
+  .calc-problem-row.wrong{background:#fff0f3;border-color:#ffc1d9;}
+  .calc-problem-row.right{background:var(--mint-light);border-color:var(--mint);}
+  .calc-problem-row .idx{font-size:12px;color:var(--muted);font-weight:800;}
+  .calc-problem-row .expr{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;min-width:0;}
+  .calc-problem-row .meta{font-size:12px;color:var(--muted);font-weight:700;text-align:right;line-height:1.35;}
+  .calc-problem-row.wrong .meta{color:var(--pink);}
+  .calc-problem-row.right .meta{color:#3aa68e;}
   .calc-quit-warn{position:fixed;inset:0;z-index:85;background:rgba(91,74,90,.55);display:none;align-items:center;justify-content:center;padding:16px;}
   .calc-quit-warn.show{display:flex;}
   .calc-quit-warn .qw-card{background:var(--surface);border-radius:24px;padding:28px 24px;max-width:340px;text-align:center;animation:csheet .26s cubic-bezier(.22,1,.36,1);}
@@ -401,6 +452,11 @@
   <section class="view" id="view-data">
     <h2 class="stitle">打卡小报告 <span class="line"></span></h2>
     <div class="kpi" id="kpi"></div>
+    <div class="panel summer-progress" id="summer-progress"></div>
+    <div class="reward-grid">
+      <div class="weekly-note" id="weekly-summary"></div>
+      <div class="badges" id="badge-box"></div>
+    </div>
     <div class="panel">
       <div class="panel-h">
         <h3>近 30 天完成趋势</h3>
@@ -427,6 +483,13 @@
       <div class="panel-h"><h3>每个习惯的完成情况</h3><span class="sub">近 30 天</span></div>
       <div id="per-habit"></div>
     </div>
+    <div class="cert-panel">
+      <div>
+        <h3>暑假打卡证书</h3>
+        <p>阶段结束时可以截图保存，也可以现在先看看。</p>
+      </div>
+      <button class="pill-btn" id="cert-open">生成证书</button>
+    </div>
     <div class="backup-note" id="backup-note"></div>
     <div class="data-tools">
       <button id="export-btn">导出备份</button>
@@ -440,6 +503,9 @@
 </main>
 <div class="calc-overlay" id="calc-overlay">
   <div class="calc-modal" id="calc-modal"></div>
+</div>
+<div class="calc-overlay" id="cert-overlay">
+  <div class="cert-card" id="cert-card"></div>
 </div>
 <div class="calc-quit-warn" id="calc-quit-warn">
   <div class="qw-card">
@@ -716,7 +782,87 @@ function renderData(){
     <div class="kpi-card k2"><div class="ico">📈</div><div class="k">本周完成率</div><div class="v num">${wkMax?Math.round(wkDone/wkMax*100):0}<small>%</small></div></div>
     <div class="kpi-card k3"><div class="ico">🏆</div><div class="k">最长连续</div><div class="v num">${allBest}<small>天</small></div></div>
     <div class="kpi-card k4"><div class="ico">📝</div><div class="k">习惯数量</div><div class="v num">${state.habits.length}<small>项</small></div></div>`;
+  renderSummerProgress();
+  renderWeeklySummary();
+  renderBadges(allBest);
   renderTrend();renderHeatmap();renderPerHabit();renderBackupNote();
+}
+function summerRange(){
+  const y=new Date().getFullYear();
+  return {start:new Date(y,6,1),end:new Date(y,7,31)};
+}
+function daysBetweenInclusive(start,end){
+  return Math.max(1,Math.round((endDateOnly(end)-ymdDate(start))/86400000)+1);
+}
+function ymdDate(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate());}
+function endDateOnly(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate());}
+function dayHasAny(ds){return !!state.records[ds]&&Object.keys(state.records[ds]).some(k=>state.records[ds][k]>=1);}
+function completedDayCountBetween(start,end){
+  let n=0;for(let d=ymdDate(start);d<=endDateOnly(end);d=addDays(d,1))if(dayHasAny(ymd(d)))n++;return n;
+}
+function habitDoneDaysBetween(hid,start,end){
+  let n=0;for(let d=ymdDate(start);d<=endDateOnly(end);d=addDays(d,1))if(rating(hid,ymd(d))>=1)n++;return n;
+}
+function calcDoneDaysBetween(start,end){
+  const all=loadCalc();let n=0;for(let d=ymdDate(start);d<=endDateOnly(end);d=addDays(d,1)){const r=all[ymd(d)];if(r&&r.completed)n++;}return n;
+}
+function renderSummerProgress(){
+  const el=document.getElementById('summer-progress');if(!el)return;
+  const range=summerRange();const today=endDateOnly(new Date());
+  const capped=today<range.start?range.start:(today>range.end?range.end:today);
+  const total=daysBetweenInclusive(range.start,range.end);
+  const done=completedDayCountBetween(range.start,capped);
+  const pct=Math.min(100,Math.max(0,Math.round(done/total*100)));
+  el.innerHTML='<div class="summer-top"><div><h3>暑假总进度</h3><p>每天一点点，已经在路上啦。</p></div><div class="summer-pct">'+pct+'%</div></div><div class="summer-bar"><i style="width:'+pct+'%"></i></div><div class="summer-foot"><span>已完成打卡 '+done+' / '+total+' 天</span><span>目标：7月1日 - 8月31日</span></div>';
+}
+function currentWeekRange(){
+  const now=new Date();const day=(now.getDay()+6)%7;
+  const start=addDays(ymdDate(now),-day);const end=addDays(start,6);
+  return {start,end};
+}
+function weeklyHabitCounts(range){
+  return state.habits.map(h=>({habit:h,days:habitDoneDaysBetween(h.id,range.start,range.end)}));
+}
+function weeklyEncouragement(counts,calcDays){
+  const best=counts.slice().sort((a,b)=>b.days-a.days)[0];
+  if(calcDays>=5)return'计算题完成 '+calcDays+' 天啦，手感越来越稳。';
+  if(best&&best.days>=4)return best.habit.name+'这周最稳定，继续保持。';
+  const any=counts.find(x=>x.days>0);
+  if(any)return'这周已经开始积累了，下周再多一点点。';
+  return'新的一周慢慢来，先完成一天就很好。';
+}
+function renderWeeklySummary(){
+  const el=document.getElementById('weekly-summary');if(!el)return;
+  const range=currentWeekRange();const counts=weeklyHabitCounts(range);const calcDays=calcDoneDaysBetween(range.start,range.end);
+  const weekDays=completedDayCountBetween(range.start,range.end);
+  const best=counts.slice().sort((a,b)=>b.days-a.days)[0];
+  const cheer=weeklyEncouragement(counts,calcDays);
+  const next=counts.length?counts.slice().sort((a,b)=>a.days-b.days)[0]:null;
+  const bestText=best&&best.days>0?'最棒的是「'+esc(best.habit.name)+'」，完成 '+best.days+' 天。':'这周还在热身，先从一天开始。';
+  const nextText=next&&next.days<7?'下周「'+esc(next.habit.name)+'」可以轻轻加油。':'每一项都很稳定，保持这个节奏。';
+  el.innerHTML='<h3>本周小结</h3><div class="line">'+cheer+'</div><p>本周打卡 '+weekDays+' 天。'+bestText+' '+nextText+'</p>';
+}
+function renderBadges(best){
+  const el=document.getElementById('badge-box');if(!el)return;
+  const levels=[{n:3,label:'连续3天',icon:'🥉'},{n:7,label:'连续7天',icon:'🥈'},{n:14,label:'连续14天',icon:'🥇'}];
+  el.innerHTML='<h3>小徽章</h3><div class="badge-list">'+levels.map(b=>'<div class="badge '+(best>=b.n?'on':'')+'"><span class="medal">'+b.icon+'</span>'+b.label+'</div>').join('')+'</div>';
+}
+function habitByNameLike(words){
+  return state.habits.find(h=>words.some(w=>h.name.includes(w)));
+}
+function openCertificate(){
+  const range=summerRange();const today=endDateOnly(new Date());
+  const end=today>range.end?range.end:today;
+  const reading=habitByNameLike(['阅读']);
+  const calc=habitByNameLike(['计算','计算题']);
+  const totalDays=completedDayCountBetween(range.start,end);
+  const readingDays=reading?habitDoneDaysBetween(reading.id,range.start,end):0;
+  const calcDays=calcDoneDaysBetween(range.start,end)||(calc?habitDoneDaysBetween(calc.id,range.start,end):0);
+  const longest=Math.max(0,...state.habits.map(bestStreak));
+  const card=document.getElementById('cert-card');
+  card.innerHTML='<div class="cert-seal">🏅</div><div class="cert-kicker">暑假成长记录</div><h2>打卡证书</h2><p class="cert-sub">认真坚持的每一天，都被好好记下来了。</p><div class="cert-stats"><div class="cert-stat"><div class="v">'+totalDays+'</div><div class="k">累计打卡天数</div></div><div class="cert-stat"><div class="v">'+readingDays+'</div><div class="k">阅读天数</div></div><div class="cert-stat"><div class="v">'+calcDays+'</div><div class="k">计算题完成天数</div></div><div class="cert-stat"><div class="v">'+longest+'</div><div class="k">最长连续天数</div></div></div><button class="btn btn-primary" id="cert-close">收好啦</button>';
+  document.getElementById('cert-overlay').classList.add('show');
+  document.getElementById('cert-close').addEventListener('click',()=>document.getElementById('cert-overlay').classList.remove('show'));
 }
 function formatBackupTime(iso){
   if(!iso)return'还没有导出过完整备份，建议定期保存到 iCloud Drive 或“文件”App。';
@@ -857,10 +1003,12 @@ document.getElementById('hm-next').addEventListener('click',()=>{state.hmDate=ne
 document.getElementById('export-btn').addEventListener('click',exportData);
 document.getElementById('import-btn').addEventListener('click',()=>document.getElementById('import-file').click());
 document.getElementById('import-file').addEventListener('change',e=>{if(e.target.files[0])importData(e.target.files[0]);e.target.value='';});
-window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();document.getElementById('celebrate').classList.remove('show');}});
+document.getElementById('cert-open').addEventListener('click',openCertificate);
+document.getElementById('cert-overlay').addEventListener('click',e=>{if(e.target.id==='cert-overlay')e.currentTarget.classList.remove('show');});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();document.getElementById('celebrate').classList.remove('show');document.getElementById('cert-overlay').classList.remove('show');}});
 window.addEventListener('resize',()=>{if(state.view==='data')renderTrend();});
 // ===== 计算打卡 =====
-const calcState={phase:'idle',problems:[],answers:[],checks:[],curIdx:0,startTime:0,endTime:0,wrongList:[],pendingView:null};
+const calcState={phase:'idle',problems:[],answers:[],submittedAnswers:[],checks:[],curIdx:0,startTime:0,endTime:0,wrongList:[],pendingView:null};
 function loadCalc(){try{return JSON.parse(localStorage.getItem(KC))||{};}catch(e){return{};}}
 function saveCalcData(data){localStorage.setItem(KC,JSON.stringify(data));}
 function mulberry32(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
@@ -883,12 +1031,13 @@ function genProblems(ds){
 function fmtDur(sec){const m=Math.floor(sec/60);const s=sec%60;return m>0?(s>0?m+'分'+s+'秒':m+'分'):s+'秒';}
 function calcIsActive(){return calcState.phase!=='idle'&&calcState.phase!=='done';}
 function calcQuitCheck(v){calcState.pendingView=v;document.getElementById('calc-quit-warn').classList.add('show');}
-function calcQuitReset(){calcState.phase='idle';calcState.problems=[];calcState.answers=[];calcState.checks=[];calcState.curIdx=0;document.getElementById('calc-overlay').classList.remove('show');}
+function calcQuitReset(){calcState.phase='idle';calcState.problems=[];calcState.answers=[];calcState.submittedAnswers=[];calcState.checks=[];calcState.curIdx=0;document.getElementById('calc-overlay').classList.remove('show');}
 function startCalc(){
   const ds=todayYmd();const all=loadCalc();
   if(all[ds]&&all[ds].completed){toast('今天已经做完啦～');return;}
   calcState.problems=genProblems(ds);
   calcState.answers=new Array(calcState.problems.length).fill(null);
+  calcState.submittedAnswers=[];
   calcState.checks=new Array(calcState.problems.length).fill(null);
   calcState.curIdx=0;calcState.startTime=Date.now();calcState.phase='doing';
   renderCalcProblem();
@@ -906,7 +1055,7 @@ function renderCalcProblem(){
   document.getElementById('calc-next').addEventListener('click',()=>{
     if(calcState.answers[idx]===null||calcState.answers[idx]===undefined){toast('先填个答案哦～');input.focus();return;}
     if(idx<total-1){calcState.curIdx++;renderCalcProblem();}
-    else{calcState.phase='checking';calcState.curIdx=0;renderCalcCheck();}
+    else{calcState.submittedAnswers=calcState.answers.slice();calcState.phase='checking';calcState.curIdx=0;renderCalcCheck();}
   });
   if(idx>0)document.getElementById('calc-prev').addEventListener('click',()=>{calcState.curIdx--;renderCalcProblem();});
 }
@@ -981,7 +1130,7 @@ function finishCalc(){
   for(let i=0;i<calcState.problems.length;i++)if(calcState.answers[i]===calcState.problems[i].ans)correctCount++;
   const total=calcState.problems.length;
   const all=loadCalc();
-  all[ds]={problems:calcState.problems.map((p,i)=>({a:p.a,b:p.b,op:p.op,t:p.t,ans:p.ans,userAns:calcState.answers[i],correct:calcState.answers[i]===p.ans})),startTime:calcState.startTime,endTime:calcState.endTime,duration,correctCount,total,accuracy:correctCount/total,completed:true,stars:3};
+  all[ds]={problems:calcState.problems.map((p,i)=>({a:p.a,b:p.b,op:p.op,t:p.t,ans:p.ans,userAns:calcState.answers[i],firstAns:calcState.submittedAnswers[i],correct:calcState.answers[i]===p.ans,wasWrong:calcState.checks[i]===false})),startTime:calcState.startTime,endTime:calcState.endTime,duration,correctCount,total,accuracy:correctCount/total,completed:true,stars:3};
   saveCalcData(all);
  const calcHabit=state.habits.find(h=>h.name.includes('20道计算')||h.name.includes('计算题'));
  if(calcHabit)setRating(calcHabit.id,ds,3);
@@ -1004,25 +1153,51 @@ function renderCalc(){
   el.innerHTML=html;
   const startBtn=document.getElementById('calc-start');
   if(startBtn)startBtn.addEventListener('click',startCalc);
+  el.querySelectorAll('[data-calc-day]').forEach(btn=>btn.addEventListener('click',()=>openCalcDayDetail(btn.dataset.calcDay)));
 }
 function renderCalcStats(all){
-  const completedDays=Object.values(all).filter(r=>r.completed).sort((a,b)=>a.startTime-b.startTime);
+  const completedEntries=Object.entries(all).filter(([,r])=>r&&r.completed).sort((a,b)=>a[0]<b[0]?1:-1);
+  const completedDays=completedEntries.map(([,r])=>r).sort((a,b)=>a.startTime-b.startTime);
   const avgAcc=completedDays.length?completedDays.reduce((s,r)=>s+r.accuracy,0)/completedDays.length:0;
   const avgDur=completedDays.length?Math.round(completedDays.reduce((s,r)=>s+r.duration,0)/completedDays.length):0;
   let html='<div class="calc-stat-row"><div class="calc-stat-card"><div class="ico">📊</div><div class="v num">'+completedDays.length+'<small>天</small></div><div class="k">累计完成</div></div><div class="calc-stat-card"><div class="ico">🎯</div><div class="v num">'+(completedDays.length?Math.round(avgAcc*100):0)+'<small>%</small></div><div class="k">平均正确率</div></div><div class="calc-stat-card"><div class="ico">⏱️</div><div class="v num">'+(completedDays.length?fmtDur(avgDur):'—')+'</div><div class="k">平均用时</div></div></div>';
-  const days=[];const d=new Date();
-  for(let i=6;i>=0;i--){const dd=addDays(d,-i);const dds=ymd(dd);days.push({ds:dds,rec:all[dds]});}
-  html+='<div class="calc-history"><h3>最近 7 天</h3>';
-  for(const dy of days){
-    if(dy.rec&&dy.rec.completed){
-      const acc=Math.round(dy.rec.accuracy*100);
-      html+='<div class="calc-hist-row"><div class="date">'+dy.ds.slice(5)+'</div><div class="bar"><i style="width:'+acc+'%"></i></div><div class="acc num">'+acc+'%</div><div class="dur num">'+fmtDur(dy.rec.duration)+'</div></div>';
-    }else{
-      html+='<div class="calc-hist-row"><div class="date">'+dy.ds.slice(5)+'</div><div class="bar"></div><div class="acc" style="color:var(--muted)">—</div><div class="dur">—</div></div>';
-    }
+  html+='<div class="calc-history"><h3>全部计算记录</h3>';
+  if(!completedEntries.length){
+    html+='<button class="calc-hist-row empty" type="button"><div class="date">今天</div><div class="bar"></div><div class="acc" style="color:var(--muted)">—</div><div class="dur">—</div></button>';
+  }
+  for(const [ds,rec] of completedEntries){
+    const acc=Math.round((rec.accuracy||0)*100);
+    html+='<button class="calc-hist-row" type="button" data-calc-day="'+ds+'"><div class="date">'+calcDateLabel(ds)+'</div><div class="bar"><i style="width:'+acc+'%"></i></div><div class="acc num">'+acc+'%</div><div class="dur num">'+fmtDur(rec.duration||0)+'</div></button>';
   }
   html+='</div>';
   return html;
+}
+function calcDateLabel(ds){
+  return ds===todayYmd()?'今天':ds.slice(5);
+}
+function problemWasWrong(p){
+  if(Object.prototype.hasOwnProperty.call(p,'wasWrong'))return !!p.wasWrong;
+  return p.correct===false;
+}
+function openCalcDayDetail(ds){
+  const rec=loadCalc()[ds];
+  if(!rec||!rec.completed||!Array.isArray(rec.problems))return;
+  const wrongCount=rec.problems.filter(problemWasWrong).length;
+  const title=calcDateLabel(ds)+'的计算题';
+  let html='<div class="calc-detail"><div class="calc-detail-head"><h2>'+title+'</h2><p>共 '+(rec.total||rec.problems.length)+' 题 · '+wrongCount+' 题曾做错 · 用时 '+fmtDur(rec.duration||0)+'</p></div><div class="calc-problem-list">';
+  rec.problems.forEach((p,i)=>{
+    const wrong=problemWasWrong(p);
+    const shownAns=Object.prototype.hasOwnProperty.call(p,'firstAns')?p.firstAns:p.userAns;
+    const displayAns=shownAns===null||shownAns===undefined?'?':shownAns;
+    const expr=p.a+' '+p.op+' '+p.b+' = '+displayAns;
+    const meta=wrong?'做错了<br>正确答案 '+p.ans:'做对了';
+    html+='<div class="calc-problem-row '+(wrong?'wrong':'right')+'"><div class="idx">#'+(i+1)+'</div><div class="expr num">'+expr+'</div><div class="meta">'+meta+'</div></div>';
+  });
+  html+='</div><div class="calc-actions"><button class="btn btn-primary" id="calc-detail-close">知道啦</button></div></div>';
+  const modal=document.getElementById('calc-modal');
+  modal.innerHTML=html;
+  document.getElementById('calc-overlay').classList.add('show');
+  document.getElementById('calc-detail-close').addEventListener('click',()=>document.getElementById('calc-overlay').classList.remove('show'));
 }
 document.getElementById('qw-stay').addEventListener('click',()=>{document.getElementById('calc-quit-warn').classList.remove('show');calcState.pendingView=null;});
 document.getElementById('qw-leave').addEventListener('click',()=>{
