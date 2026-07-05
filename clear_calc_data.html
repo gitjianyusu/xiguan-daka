@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>清除计算数据</title>
+</head>
+<body>
+    <h1>清除今日计算数据</h1>
+    <button onclick="clearCalcData()">清除计算数据</button>
+    <div id="result"></div>
+
+    <script>
+        function clearCalcData() {
+            const KC = 'habit_tracker_calc';
+            const calcData = localStorage.getItem(KC);
+            console.log('当前计算数据:', calcData);
+            
+            localStorage.removeItem(KC);
+            console.log('已清除计算数据');
+            
+            document.getElementById('result').innerHTML = 
+                '已清除计算数据！<br><br>' +
+                (calcData ? '之前的数据: ' + calcData.substring(0, 100) + '...' : '没有找到计算数据');
+        }
+    </script>
+</body>
+</html>

@@ -242,7 +242,82 @@
     .tab{padding:7px 11px;font-size:13px;}
     .star{width:40px;height:40px;font-size:27px;}
     .h-emoji{font-size:30px;width:44px;height:44px;}
-    .habit-row{padding:13px 13px;gap:11px;}
+   .habit-row{padding:13px 13px;gap:11px;}
+ }
+  /* ===== 计算打卡 ===== */
+  .calc-hero{background:linear-gradient(135deg,var(--blue-light),var(--mint-light));border-radius:var(--radius);padding:28px 20px;text-align:center;margin-bottom:18px;box-shadow:var(--shadow-soft);border:2px solid var(--blue-light);}
+  .calc-hero .big-emoji{font-size:52px;margin-bottom:10px;}
+  .calc-hero h2{margin:0 0 6px;font-size:20px;font-weight:800;}
+  .calc-hero p{margin:0 0 18px;font-size:14px;color:var(--ink-soft);font-weight:600;}
+  .calc-start-btn{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;border:none;border-radius:16px;padding:15px 40px;font-size:17px;font-weight:800;cursor:pointer;box-shadow:var(--shadow);transition:all .15s;}
+  .calc-start-btn:hover{filter:brightness(1.05);transform:translateY(-2px);}
+  .calc-overlay{position:fixed;inset:0;z-index:70;background:rgba(91,74,90,.5);display:none;align-items:center;justify-content:center;padding:16px;}
+  .calc-overlay.show{display:flex;}
+  .calc-modal{background:var(--surface);width:100%;max-width:420px;border-radius:24px;padding:28px 24px calc(24px + env(safe-area-inset-bottom));box-shadow:0 10px 40px rgba(91,74,90,.2);animation:csheet .26s cubic-bezier(.22,1,.36,1);}
+  @keyframes csheet{from{transform:scale(.92);opacity:.5}to{transform:scale(1);opacity:1}}
+  .calc-progress-bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:8px;}
+  .calc-progress-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--purple));border-radius:4px;transition:width .3s ease;}
+  .calc-progress-text{font-size:13px;color:var(--muted);font-weight:700;text-align:center;margin-bottom:24px;}
+  .calc-question{text-align:center;margin-bottom:24px;}
+  .calc-q-label{font-size:12.5px;color:var(--ink-soft);font-weight:700;margin-bottom:14px;}
+  .calc-q-expr{font-size:46px;font-weight:800;letter-spacing:2px;font-variant-numeric:tabular-nums;color:var(--ink);line-height:1.2;}
+  .calc-q-expr .op{color:var(--purple);}
+  .calc-q-expr .eq{color:var(--muted);margin:0 6px;}
+  .calc-q-expr .qm{color:var(--pink);}
+  .calc-input-wrap{display:flex;justify-content:center;margin-bottom:24px;}
+  .calc-input{width:140px;text-align:center;border:3px solid var(--line);border-radius:16px;padding:14px;font-size:34px;font-weight:800;font-family:inherit;color:var(--ink);background:var(--bg);outline:none;transition:border .15s;font-variant-numeric:tabular-nums;-moz-appearance:textfield;}
+  .calc-input::-webkit-outer-spin-button,.calc-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .calc-input:focus{border-color:var(--pink);background:var(--surface);}
+  .calc-actions{display:flex;gap:10px;}
+  .calc-actions .btn{flex:1;}
+  .calc-result{text-align:center;padding:8px 0;}
+  .calc-result .res-emoji{font-size:56px;margin-bottom:12px;animation:wiggle 1.6s ease-in-out infinite;}
+  .calc-result h2{font-size:24px;font-weight:800;margin:0 0 16px;}
+  .calc-result .res-stats{display:flex;justify-content:center;gap:28px;margin-bottom:24px;}
+  .calc-result .res-stat{text-align:center;}
+  .calc-result .res-stat .v{font-size:36px;font-weight:800;letter-spacing:-.5px;}
+  .calc-result .res-stat .v small{font-size:15px;color:var(--muted);font-weight:700;margin-left:2px;}
+  .calc-result .res-stat .k{font-size:13px;color:var(--muted);font-weight:600;margin-top:4px;}
+  .calc-result .res-stat.right .v{color:#3aa68e;}
+  .calc-result .res-stat.wrong .v{color:var(--pink);}
+  .calc-result .res-stat.time .v{color:var(--purple);}
+  .calc-fix-list{margin-bottom:16px;max-height:50vh;overflow-y:auto;}
+  .calc-fix-item{background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;transition:all .2s;}
+  .calc-fix-item .fq{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .calc-fix-item .fq .lbl{font-size:13px;color:var(--muted);font-weight:600;width:100%;margin-bottom:4px;}
+  .calc-fix-item .fq .old{color:var(--muted);text-decoration:line-through;font-size:15px;font-weight:600;}
+  .calc-fix-item input{width:90px;text-align:center;border:2px solid var(--line);border-radius:12px;padding:10px;font-size:22px;font-weight:800;font-family:inherit;color:var(--ink);background:var(--surface);outline:none;font-variant-numeric:tabular-nums;-moz-appearance:textfield;}
+  .calc-fix-item input::-webkit-outer-spin-button,.calc-fix-item input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .calc-fix-item input:focus{border-color:var(--pink);}
+  .calc-fix-item.solved{border-color:var(--mint);background:var(--mint-light);}
+  .calc-fix-item.solved input{border-color:var(--mint);color:#3aa68e;}
+  .calc-stat-row{display:flex;gap:10px;margin-bottom:18px;}
+  .calc-stat-card{flex:1;background:var(--surface);border:2px solid var(--line);border-radius:var(--radius);padding:16px 12px;text-align:center;box-shadow:var(--shadow-soft);}
+  .calc-stat-card .ico{font-size:20px;margin-bottom:6px;}
+  .calc-stat-card .v{font-size:22px;font-weight:800;letter-spacing:-.5px;}
+  .calc-stat-card .v small{font-size:12px;color:var(--muted);font-weight:700;margin-left:1px;}
+  .calc-stat-card .k{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:3px;}
+  .calc-history{background:var(--surface);border:2px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-soft);}
+  .calc-history h3{margin:0 0 14px;font-size:15px;font-weight:800;}
+  .calc-hist-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line-soft);}
+  .calc-hist-row:last-child{border-bottom:none;}
+  .calc-hist-row .date{font-size:13px;color:var(--muted);font-weight:700;width:62px;flex:none;}
+  .calc-hist-row .bar{flex:1;height:8px;background:var(--line);border-radius:4px;overflow:hidden;}
+  .calc-hist-row .bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--pink),var(--purple));}
+  .calc-hist-row .acc{font-size:15px;font-weight:800;flex:none;width:46px;text-align:right;}
+  .calc-hist-row .dur{font-size:12px;color:var(--muted);font-weight:600;flex:none;width:52px;text-align:right;}
+  .calc-quit-warn{position:fixed;inset:0;z-index:85;background:rgba(91,74,90,.55);display:none;align-items:center;justify-content:center;padding:16px;}
+  .calc-quit-warn.show{display:flex;}
+  .calc-quit-warn .qw-card{background:var(--surface);border-radius:24px;padding:28px 24px;max-width:340px;text-align:center;animation:csheet .26s cubic-bezier(.22,1,.36,1);}
+  .calc-quit-warn .qw-emoji{font-size:52px;margin-bottom:12px;}
+  .calc-quit-warn h3{font-size:19px;font-weight:800;margin:0 0 8px;}
+  .calc-quit-warn p{font-size:14px;color:var(--ink-soft);font-weight:600;margin:0 0 20px;line-height:1.6;}
+  .calc-quit-warn .qw-btns{display:flex;gap:10px;}
+  @media(max-width:640px){
+    .calc-q-expr{font-size:38px;}
+    .calc-input{font-size:28px;width:120px;}
+    .calc-stat-card .v{font-size:19px;}
+    .calc-hist-row .date{width:54px;font-size:12px;}
   }
 </style>
 </head>
@@ -270,7 +345,8 @@
    <nav class="tabs">
       <button class="tab active" data-view="today">今日</button>
       <button class="tab" data-view="habits">习惯</button>
-      <button class="tab" data-view="data">数据</button>
+     <button class="tab" data-view="data">数据</button>
+      <button class="tab" data-view="calc">计算</button>
     </nav>
   </div>
 </header>
@@ -353,10 +429,27 @@
     <div class="data-tools">
       <button id="export-btn">导出备份</button>
       <button id="import-btn">导入备份</button>
-      <input type="file" id="import-file" accept="application/json" style="display:none">
-    </div>
+     <input type="file" id="import-file" accept="application/json" style="display:none">
+   </div>
+ </section>
+  <section class="view" id="view-calc">
+    <div id="calc-content"></div>
   </section>
 </main>
+<div class="calc-overlay" id="calc-overlay">
+  <div class="calc-modal" id="calc-modal"></div>
+</div>
+<div class="calc-quit-warn" id="calc-quit-warn">
+  <div class="qw-card">
+    <div class="qw-emoji">⭐</div>
+    <h3>现在离开的话...</h3>
+    <p>今天的星星就没有了哦！<br>要坚持做完吗？</p>
+    <div class="qw-btns">
+      <button class="btn btn-ghost" id="qw-leave">放弃离开</button>
+      <button class="btn btn-primary" id="qw-stay">继续做题</button>
+    </div>
+  </div>
+</div>
 <div class="overlay" id="overlay">
   <div class="modal" id="modal">
     <h3 id="m-title">添加新习惯</h3>
@@ -419,9 +512,9 @@ function load(){
      {id:uid(),name:'主动做家务',emoji:'🧹',createdAt:Date.now()},
      {id:uid(),name:'主动收拾自己的物品',emoji:'🏠',createdAt:Date.now()},
      {id:uid(),name:'阅读1小时',emoji:'📖',createdAt:Date.now()},
-     {id:uid(),name:'听英语半小时',emoji:'🎧',createdAt:Date.now()},
-     {id:uid(),name:'做40道计算题',emoji:'🧮',createdAt:Date.now()},
-   ];
+  {id:uid(),name:'听英语半小时',emoji:'🎧',createdAt:Date.now()},
+  {id:uid(),name:'做20道计算题',emoji:'🧮',createdAt:Date.now()},
+ ];
    saveHabits();
  }
 }
@@ -478,10 +571,11 @@ function greeting(){
 function render(){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.view===state.view));
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('view-'+state.view).classList.add('active');
-  if(state.view==='today')renderToday();
-  else if(state.view==='habits')renderHabits();
-  else renderData();
+ document.getElementById('view-'+state.view).classList.add('active');
+ if(state.view==='today')renderToday();
+ else if(state.view==='habits')renderHabits();
+ else if(state.view==='calc')renderCalc();
+ else renderData();
 }
 function renderToday(){
   const ds=ymd(state.date);
@@ -663,7 +757,10 @@ function renderPerHabit(){
 function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 let toastT;
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1700);}
-function go(v){state.view=v;render();window.scrollTo({top:0,behavior:'smooth'});}
+function go(v){
+  if(calcIsActive()&&v!=='calc'){calcQuitCheck(v);return;}
+  state.view=v;render();window.scrollTo({top:0,behavior:'smooth'});
+}
 function exportData(){
   const blob=new Blob([JSON.stringify({habits:state.habits,records:state.records,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`习惯打卡_${todayYmd()}.json`;a.click();
@@ -695,6 +792,199 @@ document.getElementById('import-btn').addEventListener('click',()=>document.getE
 document.getElementById('import-file').addEventListener('change',e=>{if(e.target.files[0])importData(e.target.files[0]);e.target.value='';});
 window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();document.getElementById('celebrate').classList.remove('show');}});
 window.addEventListener('resize',()=>{if(state.view==='data')renderTrend();});
+// ===== 计算打卡 =====
+const KC='habit_tracker_calc';
+const calcState={phase:'idle',problems:[],answers:[],checks:[],curIdx:0,startTime:0,endTime:0,wrongList:[],pendingView:null};
+function loadCalc(){try{return JSON.parse(localStorage.getItem(KC))||{};}catch(e){return{};}}
+function saveCalcData(data){localStorage.setItem(KC,JSON.stringify(data));}
+function mulberry32(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function genProblems(ds){
+  const seed=parseInt(ds.replace(/-/g,''))||20260705;
+  const rng=mulberry32(seed);
+  const ri=(a,b)=>Math.floor(rng()*(b-a+1))+a;
+  const tens=[10,20,30,40,50,60,70,80];
+  const probs=[];
+  for(let i=0;i<3;i++){let a,b;do{a=ri(11,18);b=ri(2,9);}while(a%10>=b);probs.push({t:'退位减',op:'-',a,b,ans:a-b});}
+  for(let i=0;i<3;i++){let a,b;do{a=ri(12,89);b=ri(2,9);}while(a%10+b<10);probs.push({t:'进位加',op:'+',a,b,ans:a+b});}
+  for(let i=0;i<3;i++){let a,b;do{a=ri(20,99);b=ri(2,9);}while(a%10>=b);probs.push({t:'退位减',op:'-',a,b,ans:a-b});}
+  for(let i=0;i<2;i++){const a=ri(15,89);const b=tens[Math.floor(rng()*tens.length)];const op=rng()<0.5?'+':'-';if(op==='+'&&a+b>100){i--;continue;}if(op==='-'&&a<b){i--;continue;}probs.push({t:'整十数',op,a,b,ans:op==='+'?a+b:a-b});}
+  for(let i=0;i<3;i++){let a,b;do{a=ri(12,49);b=ri(12,49);}while(a+b>100||a%10+b%10<10);probs.push({t:'进位加',op:'+',a,b,ans:a+b});}
+  for(let i=0;i<3;i++){let a,b;do{a=ri(20,99);b=ri(11,89);}while(a<=b||a%10>=b%10);probs.push({t:'退位减',op:'-',a,b,ans:a-b});}
+  for(let i=0;i<3;i++){let a,b;do{a=ri(10,18);b=ri(2,9);}while(a%10<b);probs.push({t:'不退位减',op:'-',a,b,ans:a-b});}
+  for(let i=probs.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));const tmp=probs[i];probs[i]=probs[j];probs[j]=tmp;}
+  return probs;
+}
+function fmtDur(sec){const m=Math.floor(sec/60);const s=sec%60;return m>0?(s>0?m+'分'+s+'秒':m+'分'):s+'秒';}
+function calcIsActive(){return calcState.phase!=='idle'&&calcState.phase!=='done';}
+function calcQuitCheck(v){calcState.pendingView=v;document.getElementById('calc-quit-warn').classList.add('show');}
+function calcQuitReset(){calcState.phase='idle';calcState.problems=[];calcState.answers=[];calcState.checks=[];calcState.curIdx=0;document.getElementById('calc-overlay').classList.remove('show');}
+function startCalc(){
+  const ds=todayYmd();const all=loadCalc();
+  if(all[ds]&&all[ds].completed){toast('今天已经做完啦～');return;}
+  calcState.problems=genProblems(ds);
+  calcState.answers=new Array(calcState.problems.length).fill(null);
+  calcState.checks=new Array(calcState.problems.length).fill(null);
+  calcState.curIdx=0;calcState.startTime=Date.now();calcState.phase='doing';
+  renderCalcProblem();
+}
+function renderCalcProblem(){
+  const modal=document.getElementById('calc-modal');const idx=calcState.curIdx;const p=calcState.problems[idx];const total=calcState.problems.length;
+  const pct=Math.round(idx/total*100);
+  modal.innerHTML='<div class="calc-progress-bar"><i style="width:'+pct+'%"></i></div><div class="calc-progress-text">第 '+(idx+1)+' / '+total+' 题</div><div class="calc-question"><div class="calc-q-label">'+p.t+'</div><div class="calc-q-expr num">'+p.a+' <span class="op">'+p.op+'</span> '+p.b+' <span class="eq">=</span> <span class="qm">?</span></div></div><div class="calc-input-wrap"><input type="number" class="calc-input" id="calc-input" inputmode="numeric" autocomplete="off"></div><div class="calc-actions">'+(idx>0?'<button class="btn btn-ghost" id="calc-prev">上一题</button>':'')+'<button class="btn btn-primary" id="calc-next">'+(idx===total-1?'做完啦！':'下一题')+'</button></div>';
+  document.getElementById('calc-overlay').classList.add('show');
+  const input=document.getElementById('calc-input');
+  if(calcState.answers[idx]!==null&&calcState.answers[idx]!==undefined)input.value=calcState.answers[idx];
+  setTimeout(()=>input.focus(),100);
+  input.addEventListener('input',()=>{calcState.answers[idx]=input.value===''?null:parseInt(input.value);});
+  input.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('calc-next').click();});
+  document.getElementById('calc-next').addEventListener('click',()=>{
+    if(calcState.answers[idx]===null||calcState.answers[idx]===undefined){toast('先填个答案哦～');input.focus();return;}
+    if(idx<total-1){calcState.curIdx++;renderCalcProblem();}
+    else{calcState.phase='checking';calcState.curIdx=0;renderCalcCheck();}
+  });
+  if(idx>0)document.getElementById('calc-prev').addEventListener('click',()=>{calcState.curIdx--;renderCalcProblem();});
+}
+function renderCalcCheck(){
+  const modal=document.getElementById('calc-modal');const idx=calcState.curIdx;const p=calcState.problems[idx];const total=calcState.problems.length;
+  const pct=Math.round(idx/total*100);const yourAns=calcState.answers[idx];
+  modal.innerHTML='<div class="calc-progress-bar"><i style="width:'+pct+'%"></i></div><div class="calc-progress-text">检查中 · 第 '+(idx+1)+' / '+total+' 题</div><div class="calc-question"><div class="calc-q-label">做对了吗？自己检查一下～</div><div class="calc-q-expr num">'+p.a+' <span class="op">'+p.op+'</span> '+p.b+' <span class="eq">=</span> <span id="check-current-ans">'+yourAns+'</span></div><div class="calc-actions"><button class="btn btn-ghost" id="cc-wrong" style="background:#fff0f3;color:var(--pink);border-color:#ffc1d9">做错了</button><button class="btn btn-primary" id="cc-right" style="background:linear-gradient(135deg,var(--mint),#5cc4a8)">做对了</button></div>';
+  
+  function showEditMode(){
+    modal.innerHTML='<div class="calc-progress-bar"><i style="width:'+pct+'%"></i></div><div class="calc-progress-text">检查中 · 第 '+(idx+1)+' / '+total+' 题</div><div class="calc-question"><div class="calc-q-label">把答案改一改～</div><div class="calc-q-expr num">'+p.a+' <span class="op">'+p.op+'</span> '+p.b+' <span class="eq">=</span> <span id="check-current-ans">'+calcState.answers[idx]+'</span></div><div class="calc-input-wrap" style="margin-bottom:16px;"><input type="number" class="calc-input" id="check-edit-input" inputmode="numeric" placeholder="修改答案" autocomplete="off" style="width:120px;font-size:24px;"></div><div class="calc-actions"><button class="btn btn-ghost" id="cc-cancel">取消</button><button class="btn btn-primary" id="cc-submit">提交</button></div>';
+    
+    const editInput=document.getElementById('check-edit-input');
+    const currentVal=calcState.answers[idx];
+    if(currentVal!==null&&currentVal!==undefined)editInput.value=currentVal;
+    
+    editInput.addEventListener('input',()=>{
+      const newVal=editInput.value===''?null:parseInt(editInput.value);
+      document.getElementById('check-current-ans').textContent=newVal!==null&&newVal!==undefined?newVal:'?';
+    });
+    
+    document.getElementById('cc-cancel').addEventListener('click',()=>{renderCalcCheck();});
+    document.getElementById('cc-submit').addEventListener('click',()=>{
+      const newVal=editInput.value===''?null:parseInt(editInput.value);
+      calcState.answers[idx]=newVal;
+      calcState.checks[idx]=false;
+      nextCheck();
+    });
+  }
+  
+  document.getElementById('cc-right').addEventListener('click',()=>{calcState.checks[idx]=true;nextCheck();});
+  document.getElementById('cc-wrong').addEventListener('click',()=>{showEditMode();});
+  
+  const editInput=document.getElementById('check-edit-input');
+  if(yourAns!==null&&yourAns!==undefined)editInput.value=yourAns;
+  
+  editInput.addEventListener('input',()=>{
+    const newVal=editInput.value===''?null:parseInt(editInput.value);
+    calcState.answers[idx]=newVal;
+    document.getElementById('check-current-ans').textContent=newVal!==null&&newVal!==undefined?newVal:'?';
+  });
+  
+  document.getElementById('cc-edit').addEventListener('click',()=>{
+    const newVal=editInput.value===''?null:parseInt(editInput.value);
+    calcState.answers[idx]=newVal;
+    document.getElementById('check-current-ans').textContent=newVal!==null&&newVal!==undefined?newVal:'?';
+    toast('答案已修改～');
+  });
+  
+  document.getElementById('cc-right').addEventListener('click',()=>{calcState.checks[idx]=true;nextCheck();});
+  document.getElementById('cc-wrong').addEventListener('click',()=>{calcState.checks[idx]=false;nextCheck();});
+}
+function nextCheck(){const total=calcState.problems.length;if(calcState.curIdx<total-1){calcState.curIdx++;renderCalcCheck();}else{showCalcResult();}}
+function showCalcResult(){
+  let correct=0;const wrongList=[];
+  for(let i=0;i<calcState.problems.length;i++){if(calcState.checks[i])correct++;else wrongList.push(i);}
+  const total=calcState.problems.length;const wrong=total-correct;
+  if(wrong===0){finishCalc();return;}
+  calcState.phase='result';calcState.wrongList=wrongList;
+  const modal=document.getElementById('calc-modal');
+  modal.innerHTML='<div class="calc-result"><div class="res-emoji">💪</div><h2>检查完啦！</h2><div class="res-stats"><div class="res-stat right"><div class="v num">'+correct+'</div><div class="k">做对了</div></div><div class="res-stat wrong"><div class="v num">'+wrong+'</div><div class="k">还有错</div></div></div><p style="font-size:14px;color:var(--ink-soft);font-weight:600;margin:0 0 20px;">把做错的题再改一改吧～</p><div class="calc-actions"><button class="btn btn-primary" id="cr-fix">去改错</button></div></div>';
+  document.getElementById('cr-fix').addEventListener('click',()=>{calcState.phase='fixing';renderCalcFix();});
+}
+function renderCalcFix(){
+  const modal=document.getElementById('calc-modal');
+  const remaining=calcState.wrongList.filter(idx=>calcState.answers[idx]!==calcState.problems[idx].ans);
+  let items='';
+  for(const idx of calcState.wrongList){
+    const p=calcState.problems[idx];const oldAns=calcState.answers[idx];const solved=calcState.answers[idx]===p.ans;
+    items+='<div class="calc-fix-item '+(solved?'solved':'')+'"><div class="fq num"><span class="lbl">第 '+(idx+1)+' 题</span>'+p.a+' '+p.op+' '+p.b+' = <input type="number" class="calc-fix-input" data-idx="'+idx+'" value="'+(oldAns!==null&&oldAns!==undefined?oldAns:'')+'" inputmode="numeric" autocomplete="off"> <span class="old">(原来是 '+oldAns+')</span></div></div>';
+  }
+  modal.innerHTML='<div class="calc-progress-text">改错中 · 还有 '+remaining.length+' 题不对</div><div class="calc-fix-list">'+items+'</div><div class="calc-actions"><button class="btn btn-primary" id="cf-submit">提交检查</button></div>';
+  modal.querySelectorAll('.calc-fix-input').forEach(inp=>{
+    inp.addEventListener('input',()=>{
+      const idx=+inp.dataset.idx;calcState.answers[idx]=inp.value===''?null:parseInt(inp.value);
+      const item=inp.closest('.calc-fix-item');const solved=calcState.answers[idx]===calcState.problems[idx].ans;
+      item.classList.toggle('solved',solved);
+      const rem=calcState.wrongList.filter(i=>calcState.answers[i]!==calcState.problems[i].ans).length;
+      document.querySelector('.calc-progress-text').textContent='改错中 · 还有 '+rem+' 题不对';
+    });
+  });
+  document.getElementById('cf-submit').addEventListener('click',()=>{
+    const rem=calcState.wrongList.filter(idx=>calcState.answers[idx]!==calcState.problems[idx].ans);
+    if(rem.length===0){finishCalc();}
+    else{calcState.wrongList=rem;renderCalcFix();toast('还有几题不对，再试试～');}
+  });
+}
+function finishCalc(){
+  calcState.endTime=Date.now();calcState.phase='done';
+  const ds=todayYmd();const duration=Math.round((calcState.endTime-calcState.startTime)/1000);
+  let correctCount=0;
+  for(let i=0;i<calcState.problems.length;i++)if(calcState.answers[i]===calcState.problems[i].ans)correctCount++;
+  const total=calcState.problems.length;
+  const all=loadCalc();
+  all[ds]={problems:calcState.problems.map((p,i)=>({a:p.a,b:p.b,op:p.op,t:p.t,ans:p.ans,userAns:calcState.answers[i],correct:calcState.answers[i]===p.ans})),startTime:calcState.startTime,endTime:calcState.endTime,duration,correctCount,total,accuracy:correctCount/total,completed:true,stars:3};
+  saveCalcData(all);
+ const calcHabit=state.habits.find(h=>h.name.includes('20道计算')||h.name.includes('计算题'));
+ if(calcHabit)setRating(calcHabit.id,ds,3);
+  const modal=document.getElementById('calc-modal');
+  modal.innerHTML='<div class="calc-result"><div class="res-emoji">🎉</div><h2>全部完成啦！</h2><div class="res-stats"><div class="res-stat right"><div class="v num">'+correctCount+'<small>/'+total+'</small></div><div class="k">正确数</div></div><div class="res-stat time"><div class="v num">'+fmtDur(duration)+'</div><div class="k">用时</div></div></div><p style="font-size:15px;color:var(--ink-soft);font-weight:700;margin:0 0 20px;">获得 ⭐⭐⭐ 三颗星！</p><div class="calc-actions"><button class="btn btn-primary" id="cd-close">太棒了！</button></div></div>';
+  document.getElementById('cd-close').addEventListener('click',()=>{
+    document.getElementById('calc-overlay').classList.remove('show');
+    celebrate();renderCalc();
+  });
+}
+function renderCalc(){
+  const el=document.getElementById('calc-content');const ds=todayYmd();const all=loadCalc();const today=all[ds];
+  let html='';
+  if(today&&today.completed){
+    html+='<div class="calc-hero"><div class="big-emoji">🎉</div><h2>今天的计算题已完成！</h2><p>正确 '+today.correctCount+'/'+today.total+' · 正确率 '+Math.round(today.accuracy*100)+'% · 用时 '+fmtDur(today.duration)+'</p></div>';
+  }else{
+    html+='<div class="calc-hero"><div class="big-emoji">🧮</div><h2>今天的20道计算题</h2><p>做完可以拿3颗星哦～加油！</p><button class="calc-start-btn" id="calc-start">开始做题</button></div>';
+  }
+  html+=renderCalcStats(all);
+  el.innerHTML=html;
+  const startBtn=document.getElementById('calc-start');
+  if(startBtn)startBtn.addEventListener('click',startCalc);
+}
+function renderCalcStats(all){
+  const completedDays=Object.values(all).filter(r=>r.completed).sort((a,b)=>a.startTime-b.startTime);
+  const avgAcc=completedDays.length?completedDays.reduce((s,r)=>s+r.accuracy,0)/completedDays.length:0;
+  const avgDur=completedDays.length?Math.round(completedDays.reduce((s,r)=>s+r.duration,0)/completedDays.length):0;
+  let html='<div class="calc-stat-row"><div class="calc-stat-card"><div class="ico">📊</div><div class="v num">'+completedDays.length+'<small>天</small></div><div class="k">累计完成</div></div><div class="calc-stat-card"><div class="ico">🎯</div><div class="v num">'+(completedDays.length?Math.round(avgAcc*100):0)+'<small>%</small></div><div class="k">平均正确率</div></div><div class="calc-stat-card"><div class="ico">⏱️</div><div class="v num">'+(completedDays.length?fmtDur(avgDur):'—')+'</div><div class="k">平均用时</div></div></div>';
+  const days=[];const d=new Date();
+  for(let i=6;i>=0;i--){const dd=addDays(d,-i);const dds=ymd(dd);days.push({ds:dds,rec:all[dds]});}
+  html+='<div class="calc-history"><h3>最近 7 天</h3>';
+  for(const dy of days){
+    if(dy.rec&&dy.rec.completed){
+      const acc=Math.round(dy.rec.accuracy*100);
+      html+='<div class="calc-hist-row"><div class="date">'+dy.ds.slice(5)+'</div><div class="bar"><i style="width:'+acc+'%"></i></div><div class="acc num">'+acc+'%</div><div class="dur num">'+fmtDur(dy.rec.duration)+'</div></div>';
+    }else{
+      html+='<div class="calc-hist-row"><div class="date">'+dy.ds.slice(5)+'</div><div class="bar"></div><div class="acc" style="color:var(--muted)">—</div><div class="dur">—</div></div>';
+    }
+  }
+  html+='</div>';
+  return html;
+}
+document.getElementById('qw-stay').addEventListener('click',()=>{document.getElementById('calc-quit-warn').classList.remove('show');calcState.pendingView=null;});
+document.getElementById('qw-leave').addEventListener('click',()=>{
+  document.getElementById('calc-quit-warn').classList.remove('show');
+  calcQuitReset();
+  const v=calcState.pendingView||'today';calcState.pendingView=null;
+  state.view=v;render();window.scrollTo({top:0,behavior:'smooth'});
+});
+window.addEventListener('beforeunload',e=>{if(calcIsActive()){e.preventDefault();e.returnValue='';}});
 load();render();
 </script>
 </body>
