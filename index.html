@@ -208,6 +208,7 @@
   .data-tools{display:flex;gap:8px;justify-content:flex-end;}
   .data-tools button{font-size:12.5px;font-weight:700;color:var(--ink-soft);background:var(--surface);border:2px solid var(--line);cursor:pointer;padding:8px 14px;border-radius:12px;transition:all .15s;}
   .data-tools button:hover{border-color:var(--pink);color:var(--pink);}
+  .backup-note{font-size:12.5px;color:var(--muted);font-weight:600;text-align:right;margin:-4px 0 10px;}
   .celebrate{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;
     background:rgba(255,248,252,.88);backdrop-filter:blur(4px);}
   .celebrate.show{display:flex;animation:cfade .3s ease;}
@@ -426,6 +427,7 @@
       <div class="panel-h"><h3>每个习惯的完成情况</h3><span class="sub">近 30 天</span></div>
       <div id="per-habit"></div>
     </div>
+    <div class="backup-note" id="backup-note"></div>
     <div class="data-tools">
       <button id="export-btn">导出备份</button>
       <button id="import-btn">导入备份</button>
@@ -499,14 +501,17 @@
 <div class="toast" id="toast"></div>
 <script>
 "use strict";
-const KH='habit_tracker_habits', KR='habit_tracker_records';
+const DATA_SCHEMA_VERSION=1;
+const KH='habit_tracker_habits', KR='habit_tracker_records', KCEL='habit_tracker_cel', KC='habit_tracker_calc';
+const KSCHEMA='habit_tracker_schema_version', KBACKUP_AT='habit_tracker_last_backup_at', KPRE_IMPORT='habit_tracker_last_pre_import_backup';
 const EMOJIS=['🏠','🧹','📖','🎧','🧮','🏃','💧','🧘','📝','🌱','💻','🎵','✏️','🛏️','🍳','🦷','🎯','🎨','🎸','📚','🧩','⚽','🚶','🥗','☀️','🌙','💪','❤️','🦄','🌟','🌈','🎀','🍓','🍬','🪥','🧴'];
 const DOW=['日','一','二','三','四','五','六'];
 const state={habits:[],records:{},view:'today',date:new Date(),hmDate:new Date(),editingId:null,emoji:'🌱',celebrated:{}};
 function load(){
+  migrateStoredData();
   try{state.habits=JSON.parse(localStorage.getItem(KH))||[];}catch(e){state.habits=[];}
   try{state.records=JSON.parse(localStorage.getItem(KR))||{};}catch(e){state.records={};}
-  try{state.celebrated=JSON.parse(localStorage.getItem('habit_tracker_cel'))||{};}catch(e){state.celebrated={};}
+  try{state.celebrated=JSON.parse(localStorage.getItem(KCEL))||{};}catch(e){state.celebrated={};}
   if(!state.habits.length){
    state.habits=[
      {id:uid(),name:'主动做家务',emoji:'🧹',createdAt:Date.now()},
@@ -520,7 +525,19 @@ function load(){
 }
 function saveHabits(){localStorage.setItem(KH,JSON.stringify(state.habits));}
 function saveRecords(){localStorage.setItem(KR,JSON.stringify(state.records));}
-function saveCel(){localStorage.setItem('habit_tracker_cel',JSON.stringify(state.celebrated));}
+function saveCel(){localStorage.setItem(KCEL,JSON.stringify(state.celebrated));}
+function readStoredObject(key, fallback){
+  try{const value=JSON.parse(localStorage.getItem(key));return value&&typeof value==='object'?value:fallback;}catch(e){return fallback;}
+}
+function migrateStoredData(){
+  const from=parseInt(localStorage.getItem(KSCHEMA)||'0',10)||0;
+  if(from>DATA_SCHEMA_VERSION)return;
+  if(from<1){
+    if(localStorage.getItem(KCEL)===null)localStorage.setItem(KCEL,JSON.stringify({}));
+    if(localStorage.getItem(KC)===null)localStorage.setItem(KC,JSON.stringify({}));
+  }
+  localStorage.setItem(KSCHEMA,String(DATA_SCHEMA_VERSION));
+}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
 function ymd(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x;}
@@ -699,7 +716,17 @@ function renderData(){
     <div class="kpi-card k2"><div class="ico">📈</div><div class="k">本周完成率</div><div class="v num">${wkMax?Math.round(wkDone/wkMax*100):0}<small>%</small></div></div>
     <div class="kpi-card k3"><div class="ico">🏆</div><div class="k">最长连续</div><div class="v num">${allBest}<small>天</small></div></div>
     <div class="kpi-card k4"><div class="ico">📝</div><div class="k">习惯数量</div><div class="v num">${state.habits.length}<small>项</small></div></div>`;
-  renderTrend();renderHeatmap();renderPerHabit();
+  renderTrend();renderHeatmap();renderPerHabit();renderBackupNote();
+}
+function formatBackupTime(iso){
+  if(!iso)return'还没有导出过完整备份，建议定期保存到 iCloud Drive 或“文件”App。';
+  const d=new Date(iso);
+  if(isNaN(d.getTime()))return'建议定期导出完整备份，保存到 iCloud Drive 或“文件”App。';
+  return `上次备份：${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} · 建议保存到 iCloud Drive 或“文件”App。`;
+}
+function renderBackupNote(){
+  const el=document.getElementById('backup-note');
+  if(el)el.textContent=formatBackupTime(localStorage.getItem(KBACKUP_AT));
 }
 function renderTrend(){
   const svg=document.getElementById('trend');
@@ -761,17 +788,57 @@ function go(v){
   if(calcIsActive()&&v!=='calc'){calcQuitCheck(v);return;}
   state.view=v;render();window.scrollTo({top:0,behavior:'smooth'});
 }
+function buildBackupData(){
+  return {
+    schemaVersion:DATA_SCHEMA_VERSION,
+    exportedAt:new Date().toISOString(),
+    habits:state.habits,
+    records:state.records,
+    celebrated:state.celebrated,
+    calc:readStoredObject(KC,{})
+  };
+}
+function triggerBackupDownload(data,prefix){
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`${prefix}_${todayYmd()}.json`;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
 function exportData(){
-  const blob=new Blob([JSON.stringify({habits:state.habits,records:state.records,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`习惯打卡_${todayYmd()}.json`;a.click();
-  URL.revokeObjectURL(a.href);toast('已导出备份～');
+  triggerBackupDownload(buildBackupData(),'习惯打卡');
+  localStorage.setItem(KBACKUP_AT,new Date().toISOString());
+  renderBackupNote();
+  toast('已导出完整备份～');
+}
+function normalizeImportData(d){
+  if(!d||typeof d!=='object')throw 0;
+  if(!Array.isArray(d.habits)||!d.records||typeof d.records!=='object')throw 0;
+  return {
+    habits:d.habits,
+    records:d.records,
+    celebrated:Object.prototype.hasOwnProperty.call(d,'celebrated')&&d.celebrated&&typeof d.celebrated==='object'?d.celebrated:state.celebrated,
+    calc:Object.prototype.hasOwnProperty.call(d,'calc')&&d.calc&&typeof d.calc==='object'?d.calc:readStoredObject(KC,{}),
+    schemaVersion:parseInt(d.schemaVersion||'0',10)||0
+  };
+}
+function savePreImportBackup(){
+  const backup=buildBackupData();
+  localStorage.setItem(KPRE_IMPORT,JSON.stringify(backup));
+  triggerBackupDownload(backup,'导入前备份');
 }
 function importData(file){
   const r=new FileReader();
   r.onload=()=>{
     try{const d=JSON.parse(r.result);
-      if(!Array.isArray(d.habits)||typeof d.records!=='object')throw 0;
-      state.habits=d.habits;state.records=d.records;saveHabits();saveRecords();render();toast('导入成功～');
+      const data=normalizeImportData(d);
+      savePreImportBackup();
+      state.habits=data.habits;state.records=data.records;state.celebrated=data.celebrated;
+      saveHabits();saveRecords();saveCel();saveCalcData(data.calc);
+      localStorage.setItem(KSCHEMA,String(Math.min(DATA_SCHEMA_VERSION,Math.max(1,data.schemaVersion||1))));
+      localStorage.setItem(KBACKUP_AT,new Date().toISOString());
+      migrateStoredData();render();toast('导入成功，已先保存当前数据备份～');
     }catch(e){toast('导入失败：文件不对哦');}
   };
   r.readAsText(file);
@@ -793,7 +860,6 @@ document.getElementById('import-file').addEventListener('change',e=>{if(e.target
 window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();document.getElementById('celebrate').classList.remove('show');}});
 window.addEventListener('resize',()=>{if(state.view==='data')renderTrend();});
 // ===== 计算打卡 =====
-const KC='habit_tracker_calc';
 const calcState={phase:'idle',problems:[],answers:[],checks:[],curIdx:0,startTime:0,endTime:0,wrongList:[],pendingView:null};
 function loadCalc(){try{return JSON.parse(localStorage.getItem(KC))||{};}catch(e){return{};}}
 function saveCalcData(data){localStorage.setItem(KC,JSON.stringify(data));}
