@@ -872,25 +872,6 @@ function renderCalcCheck(){
   
   document.getElementById('cc-right').addEventListener('click',()=>{calcState.checks[idx]=true;nextCheck();});
   document.getElementById('cc-wrong').addEventListener('click',()=>{showEditMode();});
-  
-  const editInput=document.getElementById('check-edit-input');
-  if(yourAns!==null&&yourAns!==undefined)editInput.value=yourAns;
-  
-  editInput.addEventListener('input',()=>{
-    const newVal=editInput.value===''?null:parseInt(editInput.value);
-    calcState.answers[idx]=newVal;
-    document.getElementById('check-current-ans').textContent=newVal!==null&&newVal!==undefined?newVal:'?';
-  });
-  
-  document.getElementById('cc-edit').addEventListener('click',()=>{
-    const newVal=editInput.value===''?null:parseInt(editInput.value);
-    calcState.answers[idx]=newVal;
-    document.getElementById('check-current-ans').textContent=newVal!==null&&newVal!==undefined?newVal:'?';
-    toast('答案已修改～');
-  });
-  
-  document.getElementById('cc-right').addEventListener('click',()=>{calcState.checks[idx]=true;nextCheck();});
-  document.getElementById('cc-wrong').addEventListener('click',()=>{calcState.checks[idx]=false;nextCheck();});
 }
 function nextCheck(){const total=calcState.problems.length;if(calcState.curIdx<total-1){calcState.curIdx++;renderCalcCheck();}else{showCalcResult();}}
 function showCalcResult(){
